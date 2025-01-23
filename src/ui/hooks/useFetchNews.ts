@@ -1,8 +1,9 @@
 import { useState, useCallback } from 'react';
 import getNewsUseCase from '../../domain/useCases/getNewsUseCase';
+import { Hit } from '../../domain/interfaces/news';
 
 const useFetchNews = (onSuccess: () => void, onError: () => void) => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<Hit[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<any>(null);
 
@@ -12,7 +13,7 @@ const useFetchNews = (onSuccess: () => void, onError: () => void) => {
     setError(null);
     try {
       const result = await getNewsUseCase(onSuccess, onError);
-      setData(result);
+      setData(result.hits ?? []);
     } catch (err) {
       setError(err);
     } finally {

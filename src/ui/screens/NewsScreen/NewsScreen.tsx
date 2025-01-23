@@ -8,7 +8,10 @@ function NewsScreen() {
     const style = newsScreenStyles;
 
     const onSuccess = () => {
-        console.log('Data fetched successfully:',data);
+        console.log('Data fetched successfully:');
+        data.forEach((item, index) => {
+            console.log(item.title ,item.url);
+        })
         setRefreshing(false);
     };
 
@@ -33,8 +36,9 @@ function NewsScreen() {
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
             {loading && <Text>Loading...</Text>}
             {error && <Text>Error fetching data!</Text>}
-            {data && (
-                <Text>Data fetched</Text>
+            {data &&
+                data.map((item, index) => (
+                    <Text  key={index}>{item.title}</Text>)
             )}
         </ScrollView>
     );

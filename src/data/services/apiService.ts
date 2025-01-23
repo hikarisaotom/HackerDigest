@@ -1,5 +1,7 @@
 import axios from 'axios';
 import Config from 'react-native-config';
+import { BaseResponse } from '../../domain/interfaces/news';
+
 const apiService = {
     getData: async (onSuccess: () => void, onFailure: () => void) => {
       try {
@@ -7,7 +9,7 @@ const apiService = {
         if (onSuccess) {
           onSuccess();
         }
-        return response.data;
+        return response.data as BaseResponse;
       } catch (error) {
         if (onFailure) {
           onFailure();
