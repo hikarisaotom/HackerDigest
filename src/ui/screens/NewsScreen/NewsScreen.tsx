@@ -9,9 +9,6 @@ function NewsScreen() {
 
     const onSuccess = () => {
         console.log('Data fetched successfully:');
-        data.forEach((item, index) => {
-            console.log(item.title ,item.url);
-        })
         setRefreshing(false);
     };
 
@@ -38,7 +35,12 @@ function NewsScreen() {
             {error && <Text>Error fetching data!</Text>}
             {data &&
                 data.map((item, index) => (
-                    <Text  key={index}>{item.title}</Text>)
+                    < >
+                    <Text >{ item.title ?? item.story_title ?? item.comment_text}</Text>
+                    <Text>{ item.author ?? ""}</Text>
+                    <Text>{ item.created_at ?? ""}</Text>
+                    </>
+                    )
             )}
         </ScrollView>
     );
