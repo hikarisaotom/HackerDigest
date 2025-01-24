@@ -8,7 +8,8 @@ const newsScreenStyles = StyleSheet.create({
       padding: customTheme.spacing.l,
     },
     container: {
-      backgroundColor: customTheme.colors.light,
+      // backgroundColor: customTheme.colors.light,
+      backgroundColor: customTheme.colors.danger,
       flex: 1,
     },
   });
