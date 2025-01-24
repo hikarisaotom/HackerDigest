@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { RefreshControl, Text, View } from 'react-native';
+import { RefreshControl, View } from 'react-native';
 import newsScreenStyles from './NewsScreen.style';
 import useFetchNews from '../../hooks/useFetchNews';
 import { Hit } from '../../../domain/interfaces/news';
@@ -7,9 +7,13 @@ import { SwipeListView } from 'react-native-swipe-list-view';
 import RowItem from '../../components/molecules/RowItem/RowItem';
 import ActionButton from '../../components/atoms/ActionButton/ActionButton';
 import RowsSkeleton from '../../components/molecules/RowsSkeleton/RowsSkeleton';
+import WebViewModal from '../../components/molecules/WebViewModal/WebViewModal';
 
 function NewsScreen() {
     const [refreshing, setRefreshing] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [currentUrl, setCurrentUrl] = useState<string | null>(null);
+
     const style = newsScreenStyles;
 
     const onSuccess = () => {
@@ -23,14 +27,20 @@ function NewsScreen() {
         console.log('[!@#]error');
     };
 
-    const { data, loading, error, fetchNews } = useFetchNews(onSuccess, onError);
+    const { data, loading, fetchNews } = useFetchNews(onSuccess, onError);
 
     useEffect(() => {
         fetchNews();
     }, []);
 
     const onPressCell = (item: Hit) => {
-        console.log('[!@#]On pressed cell:', item);
+
+        if (item.url || item.story_url) {
+            setCurrentUrl(item.url ?? item.story_url ?? '');
+            setModalVisible(true);
+        } else {
+            console.log('[!@#]No URL found for this item');
+        }
     };
 
     const onSwippeCell = (item: Hit) => {
@@ -41,11 +51,10 @@ function NewsScreen() {
         setRefreshing(true);
         fetchNews();
     }, [fetchNews]);
-
     return (
         <View
             style={style.scrollView}>
-           {loading ? (
+            {loading ? (
                 <RowsSkeleton />
             ) : (
                 data && (
@@ -68,6 +77,11 @@ function NewsScreen() {
                     />
                 )
             )}
+            <WebViewModal
+                visible={modalVisible}
+                url={currentUrl}
+                onClose={() => setModalVisible(false)}
+            />
         </View>
     );
 }
