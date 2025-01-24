@@ -20,6 +20,7 @@ function NewsScreen() {
 
     const onError = () => {
         setRefreshing(false);
+        console.log('[!@#]error');
     };
 
     const { data, loading, error, fetchNews } = useFetchNews(onSuccess, onError);
