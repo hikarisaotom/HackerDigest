@@ -15,6 +15,9 @@ import {
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
+import 'react-native-reanimated';
+import 'react-native-gesture-handler';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { NewsScreen } from './screens';
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -30,7 +33,10 @@ function App(): React.JSX.Element {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <NewsScreen />
+       <GestureHandlerRootView style={{ flex: 1 }}>
+       <NewsScreen />
+       </GestureHandlerRootView>
+      
     </SafeAreaView>
   );
 }

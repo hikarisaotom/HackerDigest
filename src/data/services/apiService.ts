@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Config from 'react-native-config';
 import { BaseResponse } from '../../domain/interfaces/news';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const apiService = {
     getData: async (onSuccess: () => void, onFailure: () => void) => {
