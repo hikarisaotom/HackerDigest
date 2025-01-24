@@ -1,19 +1,22 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { RefreshControl, ScrollView, Text } from 'react-native';
+import { RefreshControl, Text, View } from 'react-native';
 import newsScreenStyles from './NewsScreen.style';
 import useFetchNews from '../../hooks/useFetchNews';
+import { Hit } from '../../../domain/interfaces/news';
+import { SwipeListView } from 'react-native-swipe-list-view';
+import RowItem from '../../components/molecules/RowItem/RowItem';
+import ActionButton from '../../components/atoms/ActionButton/ActionButton';
+
 
 function NewsScreen() {
     const [refreshing, setRefreshing] = useState(false);
     const style = newsScreenStyles;
 
     const onSuccess = () => {
-        console.log('Data fetched successfully:');
         setRefreshing(false);
     };
 
     const onError = () => {
-        console.error('Error fetching data:',data);
         setRefreshing(false);
     };
 
@@ -23,26 +26,45 @@ function NewsScreen() {
         fetchNews();
     }, []);
 
+    const onPressCell = (item: Hit) => {
+        console.log('[!@#]On pressed cell:', item);
+    };
+
+    const onSwippeCell = (item: Hit) => {
+        console.log('[!@#]On swippe cell:', item);
+    };
+
     const onRefresh = useCallback(() => {
         setRefreshing(true);
         fetchNews();
     }, [fetchNews]);
+
     return (
-        <ScrollView
-            contentContainerStyle={style.scrollView}
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+        <View
+            style={style.scrollView}>
             {loading && <Text>Loading...</Text>}
-            {error && <Text>Error fetching data!</Text>}
             {data &&
-                data.map((item, index) => (
-                    < >
-                    <Text >{ item.title ?? item.story_title ?? item.comment_text}</Text>
-                    <Text>{ item.author ?? ""}</Text>
-                    <Text>{ item.created_at ?? ""}</Text>
-                    </>
-                    )
-            )}
-        </ScrollView>
+                <SwipeListView
+                    data={data}
+                    renderItem={(row) => (
+                        <RowItem
+                            title={row.item.title ?? row.item.story_title ?? row.item.comment_text ?? ''}
+                            autor={row.item.author ?? ''}
+                            creationDate={row.item.created_at ?? ''}
+                            onPressCell={() => onPressCell(row.item)}
+                        />
+                    )}
+                    renderHiddenItem={(row) => (
+                        <ActionButton
+                            onPressed={() => onSwippeCell(row.item)}
+                        />
+                    )}
+                    leftOpenValue={0}
+                    rightOpenValue={-75}
+                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+                />
+            }
+        </View>
     );
 }
 
