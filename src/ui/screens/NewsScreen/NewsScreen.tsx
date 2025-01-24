@@ -45,7 +45,7 @@ function NewsScreen() {
         <View
             style={style.scrollView}>
            {loading ? (
-                <RowsSkeleton loading={loading} />
+                <RowsSkeleton />
             ) : (
                 data && (
                     <SwipeListView

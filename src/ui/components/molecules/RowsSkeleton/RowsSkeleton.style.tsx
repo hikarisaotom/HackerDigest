@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 import customTheme from '../../../styles/CustomTheme';
 
 const rowsSkeletonStyles = StyleSheet.create({

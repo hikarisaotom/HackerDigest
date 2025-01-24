@@ -15,7 +15,7 @@ const NewsItem = ({ title, autor, creationDate }: NewsItemProps) => {
             <NewsTitle title={title} />
             <View style={style.descriptionRow}>
                 <NewsDescription description={autor} />
-                <Text> - </Text>
+                <NewsDescription description={'-'} />
                 <NewsDescription description={creationDate} />
             </View>
         </View>
