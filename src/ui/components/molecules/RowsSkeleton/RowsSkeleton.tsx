@@ -1,69 +1,26 @@
-// import React from 'react';
-// import { Skeleton } from 'moti/skeleton'
-// import { Text } from 'react-native-gesture-handler';
-// import { MotiView } from 'moti'
+import { Image } from 'moti';
+import React from 'react';
+import { Text, View  } from 'react-native';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import customTheme from '../../../styles/CustomTheme';
+import rowsSkeletonStyles from './RowsSkeleton.style';
 
-// const Spacer = ({ height = 16 }) => <MotiView style={{ height }} />
+export default function RowsSkeleton() {
+  const styles = rowsSkeletonStyles;
+  const items = Array.from({ length: 10 }, (_, index) => (
+   <View style={styles.mainContainer} key={index}>
+     <SkeletonPlaceholder key={index} borderRadius={customTheme.borderRadius.sm} backgroundColor={customTheme.colors.light} speed={300}>
+      <View style={styles.container}>
+        <View style={styles.avatar} />
+        <View style={styles.textContainer}>
+          <Image style={styles.image} source={{uri: ''}} />
+          <Text style={styles.text}>Hello world</Text>
+        </View>
+      </View>
+    </SkeletonPlaceholder>
+   </View>
+  ));
 
-// interface RowsSkeletonProps {
-//     loading: boolean;
-// }
-// const RowsSkeleton = ({loading}:RowsSkeletonProps) => {
-//     const skeletonArray = new Array(7).fill(0);
-//     return (
-//         <Skeleton.Group show={loading}>
-//       <Skeleton>
-//       <Text>{' '}</Text>
-//       </Skeleton>
-//       <Skeleton>
-//         <Text>{' '}</Text>
-//       </Skeleton>
-//     </Skeleton.Group>
-//     );
-// // };
+  return <>{items}</>;
 
-// export default RowsSkeleton;
-
-import React, { useReducer } from 'react'
-import { StyleSheet, Pressable } from 'react-native'
-import { MotiView } from 'moti'
-import { Skeleton } from 'moti/skeleton'
-import customTheme from '../../../styles/CustomTheme'
-import { Text } from 'react-native-gesture-handler'
-import NewsItem from '../NewsItem/NewsItem'
-
-const Spacer = ({ height = 16 }) => <MotiView style={{ height }} />
-interface RowsSkeletonProps {
-    loading: boolean;
 }
-
-export default function RowsSkeleton({loading}:RowsSkeletonProps) {
-  const [dark, toggle] = useReducer((s) => !s, true)
-
-  const colorMode = 'light';
-
-  return (
-    <Pressable onPress={toggle} style={styles.container}>
-      <MotiView
-        transition={{
-          type: 'spring',
-        }}
-        style={[styles.container, styles.padded]}
-        animate={{ backgroundColor:  customTheme.colors.light }}
-      >
-        <Skeleton colorMode={colorMode} width={'100%'} />
-        <Spacer height={4} />
-        <Skeleton colorMode={colorMode} width={250} />
-      </MotiView>
-    </Pressable>
-  )
-}
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-  },
-  padded: {
-    padding: 16,
-  },
-});

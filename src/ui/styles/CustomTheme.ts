@@ -33,6 +33,7 @@ const customTheme = {
         md: 8,
         lg: 16,
         xl: 24,
+        xxl:50,
     },
     breakpoints: {
         xs: 480,
