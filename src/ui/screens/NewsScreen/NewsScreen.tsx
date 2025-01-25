@@ -10,6 +10,7 @@ import RowsSkeleton from '../../components/molecules/RowsSkeleton/RowsSkeleton';
 import WebViewModal from '../../components/molecules/WebViewModal/WebViewModal';
 import { AppContext } from '../../../data/store/Context';
 import useDeletedNews from '../../hooks/useDeletedNews';
+import useFavoritesNews from '../../hooks/useFavoritesNews';
 
 function NewsScreen() {
     const [refreshing, setRefreshing] = useState(false);
@@ -36,9 +37,11 @@ function NewsScreen() {
    //Hooks
     const { fetchNews } = useFetchNews(stopRefresh, stopRefresh);
     const {addToDeleted} = useDeletedNews();
+    const {addToFavorites} = useFavoritesNews();
 
-    const onSwippeCell = (item: Hit) => {
-        addToDeleted(item,()=>{console.log('[!@#] added to deleted');},()=>{console.log('[!@#] NOT deleted')});
+    const onDelete = (item: Hit) => {
+        // addToDeleted(item,()=>{console.log('[!@#] added to deleted');},()=>{console.log('[!@#] NOT deleted')});
+        addToFavorites(item,()=>{console.log('[!@#] added to deleted');},()=>{console.log('[!@#] NOT deleted')});
     };
 
     //effects
@@ -69,7 +72,7 @@ function NewsScreen() {
                             />
                         )}
                         renderHiddenItem={(row) => (
-                            <ActionButton onPressed={() =>  onSwippeCell(row.item)} />
+                            <ActionButton onPressed={() =>  onDelete(row.item)} />
                         )}
                         leftOpenValue={0}
                         rightOpenValue={-75}
