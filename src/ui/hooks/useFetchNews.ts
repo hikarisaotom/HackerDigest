@@ -1,27 +1,23 @@
-import { useState, useCallback } from 'react';
+import { useContext, useCallback } from 'react';
 import getNewsUseCase from '../../domain/useCases/getNewsUseCase';
-import { Hit } from '../../domain/interfaces/news';
+import { AppContext } from '../../data/store/Context';
 
 const useFetchNews = (onSuccess: () => void, onError: () => void) => {
-  const [data, setData] = useState<Hit[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<any>(null);
+  const { dispatch } = useContext(AppContext);
 
   const fetchNews = useCallback(async () => {
-    //Reseting states
-    setLoading(true);
-    setError(null);
+    dispatch({ type: 'setLoading', payload: true });
     try {
       const result = await getNewsUseCase(onSuccess, onError);
-      setData(result.hits ?? []);
+      dispatch({ type: 'setArticles', payload: result.hits ?? []});
     } catch (err) {
-      setError(err);
+      dispatch({ type: 'setError', payload: 'Something went wrong' });
     } finally {
-      setLoading(false);
+      dispatch({ type: 'setLoading', payload: false });
     }
-  }, [onSuccess, onError]);
+  }, [onSuccess, onError, dispatch]);
 
-  return { data, loading, error, fetchNews };
+  return { fetchNews };
 };
 
 export default useFetchNews;

@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { RefreshControl, Text, View } from 'react-native';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { RefreshControl, View } from 'react-native';
 import newsScreenStyles from './NewsScreen.style';
 import useFetchNews from '../../hooks/useFetchNews';
 import { Hit } from '../../../domain/interfaces/news';
@@ -7,35 +7,47 @@ import { SwipeListView } from 'react-native-swipe-list-view';
 import RowItem from '../../components/molecules/RowItem/RowItem';
 import ActionButton from '../../components/atoms/ActionButton/ActionButton';
 import RowsSkeleton from '../../components/molecules/RowsSkeleton/RowsSkeleton';
+import WebViewModal from '../../components/molecules/WebViewModal/WebViewModal';
+import { AppContext } from '../../../data/store/Context';
+import useDeletedNews from '../../hooks/useDeletedNews';
+import useFavoritesNews from '../../hooks/useFavoritesNews';
 
 function NewsScreen() {
     const [refreshing, setRefreshing] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [currentUrl, setCurrentUrl] = useState<string | null>(null);
+    const { state } = useContext(AppContext);
+    const { loading, news } = state;
     const style = newsScreenStyles;
 
-    const onSuccess = () => {
-        setTimeout(() => {
-            setRefreshing(false);
-        }, 9000);
-    };
-
-    const onError = () => {
+    //utils
+    const stopRefresh = () => {
         setRefreshing(false);
-        console.log('[!@#]error');
     };
 
-    const { data, loading, error, fetchNews } = useFetchNews(onSuccess, onError);
+    const onPressCell = (item: Hit) => {
+        if (item.url || item.story_url) {
+            setCurrentUrl(item.url ?? item.story_url ?? '');
+            setModalVisible(true);
+        } else {
+            console.log('[!@#]No URL found for this item');
+        }
+    };
 
+   //Hooks
+    const { fetchNews } = useFetchNews(stopRefresh, stopRefresh);
+    const {addToDeleted} = useDeletedNews();
+    const {addToFavorites} = useFavoritesNews();
+
+    const onDelete = (item: Hit) => {
+        // addToDeleted(item,()=>{console.log('[!@#] added to deleted');},()=>{console.log('[!@#] NOT deleted')});
+        addToFavorites(item,()=>{console.log('[!@#] added to deleted');},()=>{console.log('[!@#] NOT deleted')});
+    };
+
+    //effects
     useEffect(() => {
         fetchNews();
     }, []);
-
-    const onPressCell = (item: Hit) => {
-        console.log('[!@#]On pressed cell:', item);
-    };
-
-    const onSwippeCell = (item: Hit) => {
-        console.log('[!@#]On swippe cell:', item);
-    };
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
@@ -45,12 +57,12 @@ function NewsScreen() {
     return (
         <View
             style={style.scrollView}>
-           {loading ? (
+            {loading ? (
                 <RowsSkeleton />
             ) : (
-                data && (
+                news && (
                     <SwipeListView
-                        data={data}
+                        data={news}
                         renderItem={(row) => (
                             <RowItem
                                 title={row.item.title ?? row.item.story_title ?? row.item.comment_text ?? ''}
@@ -60,7 +72,7 @@ function NewsScreen() {
                             />
                         )}
                         renderHiddenItem={(row) => (
-                            <ActionButton onPressed={() => onSwippeCell(row.item)} />
+                            <ActionButton onPressed={() =>  onDelete(row.item)} />
                         )}
                         leftOpenValue={0}
                         rightOpenValue={-75}
@@ -68,6 +80,11 @@ function NewsScreen() {
                     />
                 )
             )}
+            <WebViewModal
+                visible={modalVisible}
+                url={currentUrl}
+                onClose={() => setModalVisible(false)}
+            />
         </View>
     );
 }

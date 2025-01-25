@@ -11,7 +11,7 @@ const formatDate = (dateString: string): string => {
 const getNewsUseCase = async (onSuccess: ()=> void, onError: ()=> void) => {
     try {
       const data = await apiService.getData(onSuccess, onError);
-      const formatedHits = data.hits.map((item: any) => ({
+      const formatedHits = data?.hits.map((item: any) => ({
         ...item,
         //format date to a more readable format
         created_at: formatDate(item.created_at),
