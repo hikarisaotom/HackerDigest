@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { RefreshControl, View } from 'react-native';
 import newsScreenStyles from './NewsScreen.style';
 import useFetchNews from '../../hooks/useFetchNews';
@@ -8,6 +8,7 @@ import RowItem from '../../components/molecules/RowItem/RowItem';
 import ActionButton from '../../components/atoms/ActionButton/ActionButton';
 import RowsSkeleton from '../../components/molecules/RowsSkeleton/RowsSkeleton';
 import WebViewModal from '../../components/molecules/WebViewModal/WebViewModal';
+import { AppContext } from '../../../data/store/Context';
 
 function NewsScreen() {
     const [refreshing, setRefreshing] = useState(false);
@@ -26,8 +27,9 @@ function NewsScreen() {
         setRefreshing(false);
         console.log('[!@#]error');
     };
-
-    const { data, loading, fetchNews } = useFetchNews(onSuccess, onError);
+    const { state } = useContext(AppContext);
+    const { loading, news } = state;
+    const {fetchNews } = useFetchNews(onSuccess, onError);
 
     useEffect(() => {
         fetchNews();
@@ -57,9 +59,9 @@ function NewsScreen() {
             {loading ? (
                 <RowsSkeleton />
             ) : (
-                data && (
+                news && (
                     <SwipeListView
-                        data={data}
+                        data={news}
                         renderItem={(row) => (
                             <RowItem
                                 title={row.item.title ?? row.item.story_title ?? row.item.comment_text ?? ''}
