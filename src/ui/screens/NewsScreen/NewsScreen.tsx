@@ -9,34 +9,22 @@ import ActionButton from '../../components/atoms/ActionButton/ActionButton';
 import RowsSkeleton from '../../components/molecules/RowsSkeleton/RowsSkeleton';
 import WebViewModal from '../../components/molecules/WebViewModal/WebViewModal';
 import { AppContext } from '../../../data/store/Context';
+import useDeletedNews from '../../hooks/useDeletedNews';
 
 function NewsScreen() {
     const [refreshing, setRefreshing] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [currentUrl, setCurrentUrl] = useState<string | null>(null);
-
-    const style = newsScreenStyles;
-
-    const onSuccess = () => {
-        setTimeout(() => {
-            setRefreshing(false);
-        }, 9000);
-    };
-
-    const onError = () => {
-        setRefreshing(false);
-        console.log('[!@#]error');
-    };
     const { state } = useContext(AppContext);
     const { loading, news } = state;
-    const {fetchNews } = useFetchNews(onSuccess, onError);
+    const style = newsScreenStyles;
 
-    useEffect(() => {
-        fetchNews();
-    }, []);
+    //utils
+    const stopRefresh = () => {
+        setRefreshing(false);
+    };
 
     const onPressCell = (item: Hit) => {
-
         if (item.url || item.story_url) {
             setCurrentUrl(item.url ?? item.story_url ?? '');
             setModalVisible(true);
@@ -45,14 +33,24 @@ function NewsScreen() {
         }
     };
 
+   //Hooks
+    const { fetchNews } = useFetchNews(stopRefresh, stopRefresh);
+    const {addToDeleted} = useDeletedNews();
+
     const onSwippeCell = (item: Hit) => {
-        console.log('[!@#]On swippe cell:', item);
+        addToDeleted(item,()=>{console.log('[!@#] added to deleted');},()=>{console.log('[!@#] NOT deleted')});
     };
+
+    //effects
+    useEffect(() => {
+        fetchNews();
+    }, []);
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
         fetchNews();
     }, [fetchNews]);
+
     return (
         <View
             style={style.scrollView}>
@@ -71,7 +69,7 @@ function NewsScreen() {
                             />
                         )}
                         renderHiddenItem={(row) => (
-                            <ActionButton onPressed={() => onSwippeCell(row.item)} />
+                            <ActionButton onPressed={() =>  onSwippeCell(row.item)} />
                         )}
                         leftOpenValue={0}
                         rightOpenValue={-75}

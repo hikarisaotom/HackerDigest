@@ -1,7 +1,8 @@
-import { createContext, useReducer } from 'react';
+import { createContext, useEffect, useReducer } from 'react';
 import { Contextprops, NewsState } from './types/types';
 import { newsReducer } from './reducers/newsReducer';
 import { newsAction } from './actions/newsActions';
+import getDeletedUseCase from '../../domain/useCases/deleteNews/getDeletedUseCase';
 
 const initialState:NewsState = {
     news: [],
@@ -26,7 +27,10 @@ export const AppContext = createContext<{
 // Create context provider
 export const ContextProvider = ({ children }: any) => {
     const [state, dispatch] = useReducer(newsReducer, initialState);
-
+    useEffect(() => {
+      getDeletedUseCase();
+      console.log('[!@#] Updated deleted articles:', state.deleteNews);
+    }, [state.deleteNews]);
     return (
       // eslint-disable-next-line react/react-in-jsx-scope
       <AppContext.Provider

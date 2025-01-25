@@ -9,7 +9,7 @@ const useFetchNews = (onSuccess: () => void, onError: () => void) => {
     dispatch({ type: 'setLoading', payload: true });
     try {
       const result = await getNewsUseCase(onSuccess, onError);
-      dispatch({ type: 'setArticles', payload: result.hits });
+      dispatch({ type: 'setArticles', payload: result.hits ?? []});
     } catch (err) {
       dispatch({ type: 'setError', payload: 'Something went wrong' });
     } finally {

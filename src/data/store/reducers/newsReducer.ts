@@ -13,40 +13,40 @@ export function newsReducer(state: NewsState, action: newsAction) {
         case 'setFavorites':
             return {
                 ...state,
-                favorites: action.payload,
+                favoriteNews: action.payload,
             };
 
         case 'addToFavorites':
             return {
                 ...state,
-                favorites: [...state.favoriteNews, action.payload],
+                favoriteNews: [...state.favoriteNews, action.payload],
             };
         case 'removeFromFavorites':
             return {
                 ...state,
-                favorites: state.favoriteNews.filter(article => article.story_id !== action.payload.story_id),
+                favoriteNews: state.favoriteNews.filter(article => article.story_id !== action.payload.story_id),
             };
         case 'setDeletedArticles':
             return {
                 ...state,
-                deleted: action.payload,
+                deleteNews: action.payload,
             };
         case 'deleteArticle':
             return {
                 ...state,
                 news: state.news.filter(article => article.story_id !== action.payload.story_id),
-                deleted: [...state.deleteNews, action.payload],
+                deleteNews: [...state.deleteNews, action.payload],
             };
-            case 'setLoading':
-                return {
-                    ...state,
-                    loading: action.payload,
-                };
-                case 'setError':
-                    return {
-                        ...state,
-                        error: action.payload,
-                    };
+        case 'setLoading':
+            return {
+                ...state,
+                loading: action.payload,
+            };
+        case 'setError':
+            return {
+                ...state,
+                error: action.payload,
+            };
         default:
             return state;
     }
