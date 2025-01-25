@@ -11,6 +11,7 @@ import WebViewModal from '../../components/molecules/WebViewModal/WebViewModal';
 import { AppContext } from '../../../data/store/Context';
 import useDeletedNews from '../../hooks/useDeletedNews';
 import useFavoritesNews from '../../hooks/useFavoritesNews';
+import { showNotification } from '../../utils/Notifications';
 
 function NewsScreen() {
     const [refreshing, setRefreshing] = useState(false);
@@ -41,7 +42,8 @@ function NewsScreen() {
 
     const onDelete = (item: Hit) => {
         // addToDeleted(item,()=>{console.log('[!@#] added to deleted');},()=>{console.log('[!@#] NOT deleted')});
-        addToFavorites(item,()=>{console.log('[!@#] added to deleted');},()=>{console.log('[!@#] NOT deleted')});
+        // addToFavorites(item,()=>{console.log('[!@#] added to deleted');},()=>{console.log('[!@#] NOT deleted')});
+        showNotification('Deleted', 'Article deleted');
     };
 
     //effects

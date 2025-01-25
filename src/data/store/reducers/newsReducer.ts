@@ -47,6 +47,11 @@ export function newsReducer(state: NewsState, action: newsAction) {
                 ...state,
                 error: action.payload,
             };
+        case 'setNotificationPreferences':
+            return {
+                ...state,
+                notificationPreferences: action.payload,
+            };
         default:
             return state;
     }

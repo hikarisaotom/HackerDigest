@@ -1,9 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BaseResponse, Hit } from '../../domain/interfaces/news';
+import { NotificationPreferences } from '../store/types/types';
 
 const API_CACHE_KEY = 'last_api_response';
 const FAVORITES_KEY = 'favorites_list';
 const DELETED_KEY = 'deleted_list';
+const NOTIFICATION_PREFERENCES = 'notification_preferences';
 
 const localStorageService = {
     // Save the API response
@@ -62,6 +64,27 @@ const localStorageService = {
         } catch (error) {
             console.error('[!@#] Read Deleted Error:', error);
             return [];
+        }
+    },
+
+    // Save notification preferences
+    saveNotificationPreferences: async (preferences: NotificationPreferences) => {
+        try {
+            await AsyncStorage.setItem(NOTIFICATION_PREFERENCES, JSON.stringify(preferences));
+        } catch (error) {
+            console.error('[!@#] Save Notification Preferences Error:', error);
+        }
+    },
+
+    // Read notification preferences
+    readNotificationPreferences: async (): Promise<NotificationPreferences> => {
+        let defaultResponse:NotificationPreferences = {sendNotifications: true, timeInterval: 1, articleType: ''};
+        try {
+            const preferences = await AsyncStorage.getItem(NOTIFICATION_PREFERENCES);
+            return preferences ? JSON.parse(preferences) : defaultResponse;
+        } catch (error) {
+            console.error('[!@#] Read Notification Preferences Error:', error);
+            return defaultResponse;
         }
     },
 };
