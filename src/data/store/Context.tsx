@@ -2,7 +2,8 @@ import { createContext, useEffect, useReducer } from 'react';
 import { Contextprops, NewsState } from './types/types';
 import { newsReducer } from './reducers/newsReducer';
 import { newsAction } from './actions/newsActions';
-import getDeletedUseCase from '../../domain/useCases/deleteNews/getDeletedUseCase';
+import saveDeletedUseCase from '../../domain/useCases/deleteNews/saveDeletedUseCase';
+import saveFavoritesUseCase from '../../domain/useCases/favoriteNews/saveFavoritesUseCase';
 
 const initialState:NewsState = {
     news: [],
@@ -28,9 +29,15 @@ export const AppContext = createContext<{
 export const ContextProvider = ({ children }: any) => {
     const [state, dispatch] = useReducer(newsReducer, initialState);
     useEffect(() => {
-      getDeletedUseCase();
+      saveDeletedUseCase(state.deleteNews);
       console.log('[!@#] Updated deleted articles:', state.deleteNews);
     }, [state.deleteNews]);
+
+    useEffect(() => {
+      saveFavoritesUseCase(state.favoriteNews);
+      console.log('[!@#] Updated favorite articles:', state.favoriteNews);
+    }, [state.favoriteNews]);
+
     return (
       // eslint-disable-next-line react/react-in-jsx-scope
       <AppContext.Provider
