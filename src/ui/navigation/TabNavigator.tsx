@@ -6,11 +6,12 @@ import useDeletedNews from '../hooks/useDeletedNews';
 import useFavoritesNews from '../hooks/useFavoritesNews';
 import getNotificationPreferencesUseCase from '../../domain/useCases/notifications/getNotificationPreferencesUseCase';
 import { AppContext } from '../../data/store/Context';
+import backgroundService from '../services/BackgroundSyncService';
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
-  const { dispatch } = useContext(AppContext);
+  const { state, dispatch } = useContext(AppContext);
   const { fetchNews } = useFetchNews();
   const { fetchDeleted } = useDeletedNews();
   const { fetchFavorites } = useFavoritesNews();
@@ -23,6 +24,19 @@ const TabNavigator = () => {
       fetchFavorites().then(() => { console.log('[!@#] FAVORITES LOADED'); });
       fetchNews().then(() => {fetchDeleted().then(() => { console.log('[!@#] DELETED LOADED'); }); });
     }, []);
+
+    useEffect(() => {
+      if (state.notificationPreferences) {
+        let {sendNotifications,timeInterval,articleType} = state.notificationPreferences;
+        if(sendNotifications){
+          backgroundService.stopBackgroundSync();
+          backgroundService.startBackgroundSync(articleType,timeInterval);
+        }else{
+          backgroundService.stopBackgroundSync();
+        }
+        console.log('[!@#] Updated notification preferences:', state.notificationPreferences);
+      }
+    }, [state.notificationPreferences]);
 
   return (
     <Tab.Navigator

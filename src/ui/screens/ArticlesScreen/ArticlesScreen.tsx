@@ -76,6 +76,7 @@ function ArticlesScreen() {
                     onRefresh={onRefresh}
                     refreshing={refreshing}
                     onPress={onPressCell}
+                    
                   />
                 )
             )}

@@ -1,6 +1,7 @@
 import saveDeletedUseCase from '../../../domain/useCases/deleteNews/saveDeletedUseCase';
 import saveFavoritesUseCase from '../../../domain/useCases/favoriteNews/saveFavoritesUseCase';
 import saveNewsUseCase from '../../../domain/useCases/news/saveNewsUseCase';
+import saveNotificationPreferencesUseCase from '../../../domain/useCases/notifications/saveNotificationPreferencesUseCase';
 import { newsAction } from '../actions/newsActions';
 import { NewsState } from '../types/types';
 
@@ -69,10 +70,13 @@ export function newsReducer(state: NewsState, action: newsAction) {
                 error: action.payload,
             };
         case 'setNotificationPreferences':
+            {
+                saveNotificationPreferencesUseCase(action.payload);
             return {
                 ...state,
                 notificationPreferences: action.payload,
             };
+            }
         default:
             return state;
     }

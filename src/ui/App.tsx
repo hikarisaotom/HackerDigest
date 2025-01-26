@@ -42,9 +42,7 @@ function App(): React.JSX.Element {
     setModalVisible(true);
   };
   useEffect(() => {
-    return () => {
       notificationService.observeNotificationsEvents(onNotificationPress);
-    };
   }, []);
 
   return (
