@@ -1,7 +1,7 @@
-import { useContext, useCallback, useEffect } from 'react';
+import { useContext, useCallback } from 'react';
 import { AppContext } from '../../data/store/Context';
-import { Hit } from '../../domain/interfaces/news';
 import getDeletedUseCase from '../../domain/useCases/deleteNews/getDeletedUseCase';
+import { Article } from '../../domain/interfaces/article';
 
 
 const useDeletedNews = () => {
@@ -16,10 +16,11 @@ const useDeletedNews = () => {
     }
   }, [dispatch]);
 
-  const addToDeleted = useCallback(async (deleted: Hit, onSuccess: () => void, onError: () => void) => {
+  const addToDeleted = useCallback(async (deleted: Article, onSuccess: () => void, onError: () => void) => {
     try {
-      console.log('[!@#] ARTICLE TO DELETE', deleted.title ?? deleted.story_title ?? deleted.comment_text);
+      console.log('[!@#] ARTICLE TO DELETE', deleted.title);
       dispatch({ type: 'deleteArticle', payload: deleted });
+      onSuccess();
     } catch (err) {
       dispatch({ type: 'setError', payload: 'Something went wrong' });
       onError();

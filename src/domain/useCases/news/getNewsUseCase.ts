@@ -1,4 +1,6 @@
 import apiService from '../../../data/services/apiService';
+import localStorageService from '../../../data/services/localStorageService';
+import { Article } from '../../interfaces/article';
 
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
@@ -8,18 +10,29 @@ const formatDate = (dateString: string): string => {
   return `${year}-${month}-${day}`;
 };
 
-const getNewsUseCase = async (onSuccess: ()=> void, onError: ()=> void) => {
-    try {
-      const data = await apiService.getData(onSuccess, onError);
-      const formatedHits = data?.hits.map((item: any) => ({
-        ...item,
-        //format date to a more readable format
-        created_at: formatDate(item.created_at),
+const getNewsUseCase = async () => {
+  try {
+    const hits = await apiService.getData();
+    if (hits) {
+      let Unknown = 'Unknown';
+      const articles: Article[] = hits?.map((item: any) => ({
+        id: item.story_id ?? item.objectID ,
+        title: item.title ?? item.story_title ?? item.comment_text ?? Unknown,
+        content: item.content,
+        author: item.author ?? Unknown,
+        url: item.url ?? item.story_url ?? '',
+        date: item.created_at ? formatDate(item.created_at) : Unknown,
       }));
-      const newData = { ...data, hits: formatedHits };
-      return newData;
-    } catch (error) {
-      throw error;
+      // save the new articles to local storage for offline use
+      await localStorageService.saveArticles(articles);
+      return articles;
+    } else {
+       // if hits is null, probably because of an error, try to get the saved data
+      let savedData = await localStorageService.readArticles();
+      return savedData;
     }
-  };
-  export default getNewsUseCase;
+  } catch (error) {
+    throw error;
+  }
+};
+export default getNewsUseCase;

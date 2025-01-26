@@ -1,7 +1,7 @@
 import localStorageService from '../../../data/services/localStorageService';
-import { Hit } from '../../interfaces/news';
+import { Article } from '../../interfaces/article';
 
-const saveFavoritesUseCase = async (newData: Hit[]) => {
+const saveFavoritesUseCase = async (newData: Article[]) => {
     try {
       let data = await localStorageService.saveFavorites(newData);
       return data;

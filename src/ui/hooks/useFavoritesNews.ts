@@ -1,7 +1,7 @@
 import { useContext, useCallback } from 'react';
 import { AppContext } from '../../data/store/Context';
 import getFavoritesUseCase from '../../domain/useCases/favoriteNews/getFavoritesUseCase';
-import { Hit } from '../../domain/interfaces/news';
+import { Article } from '../../domain/interfaces/article';
 const useFavoritesNews = () => {
     const {dispatch } = useContext(AppContext);
 
@@ -14,7 +14,7 @@ const useFavoritesNews = () => {
         }
     }, [dispatch]);
 
-    const addToFavorites = useCallback(async (newFavorite: Hit, onSuccess: () => void, onError: () => void) => {
+    const addToFavorites = useCallback(async (newFavorite: Article, onSuccess: () => void, onError: () => void) => {
         try {
             dispatch({ type: 'addToFavorites', payload: newFavorite });
             onSuccess();
@@ -24,7 +24,7 @@ const useFavoritesNews = () => {
         }
     }, [ dispatch]);
 
-    const removeFromFavorites = useCallback(async (newFavorite: Hit, onSuccess: () => void, onError: () => void) => {
+    const removeFromFavorites = useCallback(async (newFavorite: Article, onSuccess: () => void, onError: () => void) => {
         try {
             dispatch({ type: 'removeFromFavorites', payload: newFavorite });
             onSuccess();

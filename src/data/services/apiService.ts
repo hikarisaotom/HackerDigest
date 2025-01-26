@@ -1,50 +1,38 @@
 import axios from 'axios';
 import Config from 'react-native-config'
-import { BaseResponse } from '../../domain/interfaces/news';
-import localStorageService from './localStorageService';
+import { BaseResponse, Hit } from '../types/news';
 
+const fetchData = async (url: string) => {
+  try {
+    const response = await axios.get(url);
+    return response.data as BaseResponse;
+  } catch (error) {
+    throw error;
+  }
+};
 
 const apiService = {
-  getData: async (onSuccess: () => void, onFailure: () => void): Promise<BaseResponse | null> => {
+  getData: async (): Promise<Hit[] | null> => {
     try {
       let url = Config.API_URL?.replace('$SEARCH_TERM$',Config.DEFAULT_SEARCH_TERM) ?? '';
       console.log('[!@#] BASE URL:', url);
-      const response = await axios.get(url);
-      // Save response to AsyncStorage
-      await localStorageService.saveData(response.data);
-      if (onSuccess) {
-        onSuccess();
-      }
-      return response.data as BaseResponse;
+      const response = await fetchData(url);
+      return response.hits ?? null;
     } catch (error) {
-      // If there's no internet connection, load from AsyncStorage
-      const cachedData = await localStorageService.readData();
-      if (cachedData) {
-        console.log('[!@#] Loaded from cache');
-        if (onFailure) {
-          onFailure();
-        }
-        return cachedData;
-      }else{
-        if (onFailure) {
-          onFailure();
-        }
-        console.log('[!@#]error', error);
-        throw error;
+       return null;
       }
-    }
-  },
-  getPreferenceData: async (query:string): Promise<BaseResponse | null> => {
+    },
+  getPreferenceData: async (searchTerm:string): Promise<Hit[] | null> => {
     try {
-      let searchTerm = query ? query :  Config.DEFAULT_SEARCH_TERM ?? 'mobile';
-      let url = Config.API_URL?.replace('$SEARCH_TERM$',searchTerm) ?? '';
-      console.log('[!@#] PREFERENCE URL:', url);
-      const response = await axios.get(url);
-      return response.data as BaseResponse ?? {};
+      let search_term = searchTerm ? searchTerm :  Config.DEFAULT_SEARCH_TERM ?? 'mobile';
+      let url = Config.API_URL?.replace('$SEARCH_TERM$',search_term) ?? '';
+      console.log('[!@#] Preference:', url);
+      const response = await fetchData(url);
+      return response.hits ?? null;
     } catch (error) {
-      return null;
-    }
-  },
+        return null;
+      }
+    },
 };
 
 export default apiService;

@@ -1,7 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { RefreshControl, View } from 'react-native';
 import useFetchNews from '../../hooks/useFetchNews';
-import { Hit } from '../../../domain/interfaces/news';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import RowItem from '../../components/molecules/RowItem/RowItem';
 import ActionButton from '../../components/atoms/ActionButton/ActionButton';
@@ -12,6 +11,7 @@ import useDeletedNews from '../../hooks/useDeletedNews';
 import useFavoritesNews from '../../hooks/useFavoritesNews';
 import notificationService from '../../services/NotificationService';
 import ArticlesScreenStyles from './ArticlesScreen.style';
+import { Article } from '../../../domain/interfaces/article';
 
 function ArticlesScreen() {
     const [refreshing, setRefreshing] = useState(false);
@@ -26,12 +26,12 @@ function ArticlesScreen() {
         setRefreshing(false);
     };
 
-    const onPressCell = (item: Hit) => {
-        if (item.url || item.story_url) {
-            setCurrentUrl(item.url ?? item.story_url ?? '');
+    const onPressCell = (item: Article) => {
+        if (item.url) {
+            setCurrentUrl(item.url);
             setModalVisible(true);
         } else {
-            console.log('[!@#]No URL found for this item');
+            notificationService.showDangerToast('🚨 Oh no!', 'We cannot open this article 😢');
         }
     };
 
@@ -40,12 +40,12 @@ function ArticlesScreen() {
     const {addToDeleted} = useDeletedNews();
     const {addToFavorites} = useFavoritesNews();
 
-    const onFavorite = (item: Hit) => {
+    const onFavorite = (item: Article) => {
         addToFavorites(item,()=>{console.log('[!@#] added to favorites');},()=>{console.log('[!@#] NOT added')});
         notificationService.showInfoToast('🥳 God news!', 'The article has been added to your favorites 🎉');
     };
 
-    const onDelete = (item: Hit) => {
+    const onDelete = (item: Article) => {
         addToDeleted(item,()=>{console.log('[!@#] added to deleted');},()=>{console.log('[!@#] NOT deleted')});
         notificationService.showDangerToast('🗑️ So sad to let it go... ', 'The article has been deleted and will not be shown again 👋');
     };
@@ -71,9 +71,10 @@ function ArticlesScreen() {
                         data={news}
                         renderItem={(row) => (
                             <RowItem
-                                title={row.item.title ?? row.item.story_title ?? row.item.comment_text ?? ''}
-                                autor={row.item.author ?? ''}
-                                creationDate={row.item.created_at ?? ''}
+                                key={row.item.id}
+                                title={row.item.title}
+                                autor={row.item.author}
+                                creationDate={row.item.date}
                                 onPressCell={() => onPressCell(row.item)}
                             />
                         )}
@@ -86,11 +87,14 @@ function ArticlesScreen() {
                     />
                 )
             )}
-            <WebViewModal
+            {
+                modalVisible&& currentUrl && <WebViewModal
                 visible={modalVisible}
                 url={currentUrl}
                 onClose={() => setModalVisible(false)}
             />
+            }
+
         </View>
     );
 }

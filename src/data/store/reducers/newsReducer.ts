@@ -7,7 +7,7 @@ export function newsReducer(state: NewsState, action: newsAction) {
             return {
                 ...state,
                 news: action.payload.filter(
-                    article => !state.deleteNews.some(del => del.story_id === article.story_id)
+                    article => !state.deleteNews.some(del => del.id === article.id)
                 ),
             };
         case 'setFavorites':
@@ -24,7 +24,7 @@ export function newsReducer(state: NewsState, action: newsAction) {
         case 'removeFromFavorites':
             return {
                 ...state,
-                favoriteNews: state.favoriteNews.filter(article => article.story_id !== action.payload.story_id),
+                favoriteNews: state.favoriteNews.filter(article => article.id !== action.payload.id),
             };
         case 'setDeletedArticles':
             return {
@@ -34,7 +34,7 @@ export function newsReducer(state: NewsState, action: newsAction) {
         case 'deleteArticle':
             return {
                 ...state,
-                news: state.news.filter(article => article.story_id !== action.payload.story_id),
+                news: state.news.filter(article => article.id !== action.payload.id),
                 deleteNews: [...state.deleteNews, action.payload],
             };
         case 'setLoading':

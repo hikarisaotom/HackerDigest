@@ -1,7 +1,7 @@
 import notifee, { EventType } from '@notifee/react-native';
 import Toast, { ToastType } from 'react-native-toast-message';
 
-const showToast = (title: string, description: string, type: ToastType) => {
+const showToast = (type: ToastType, title: string, description: string) => {
   Toast.show({
     type: type,
     text1: title,
@@ -62,13 +62,13 @@ const notificationService = {
     });
   },
   showInfoToast: (title:string,description:string) => {
-    showToast('Info', 'showing info', 'info');
+    showToast('info', title, description);
   },
   showDangerToast: (title:string,description:string) => {
-    showToast('Error', 'Something went wrong', 'error');
+    showToast('error',  title, description);
   },
   showSucessToast: (title:string,description:string) => {
-    showToast('Success', 'Operation completed', 'success');
+    showToast('success',  title, description);
   },
 };
 

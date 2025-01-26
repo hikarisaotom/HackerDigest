@@ -1,4 +1,4 @@
-import { createContext, useCallback, useEffect, useReducer } from 'react';
+import { createContext, useEffect, useReducer } from 'react';
 import { Contextprops, NewsState } from './types/types';
 import { newsReducer } from './reducers/newsReducer';
 import { newsAction } from './actions/newsActions';
