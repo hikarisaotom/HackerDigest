@@ -24,6 +24,7 @@ type SwipeableListProps<T> = {
   firstAction?: Actions,
   secondAction?: Actions,
   onRefresh?: () => void;
+  onPress: (item: Article) => void;
   refreshing?: boolean;
 };
 
@@ -35,6 +36,7 @@ function SwipeableList<T>({
   secondAction,
   onRefresh = () => {},
   refreshing = false,
+  onPress = () => {},
 }: SwipeableListProps<T>) {
   const rowHeightAnimatedValue = new Animated.Value(60);
 
@@ -43,7 +45,7 @@ function SwipeableList<T>({
       <TouchableHighlight
         style={styles.rowFrontVisible}
         underlayColor={'#aaa'}
-        onPress={() => console.log('Item pressed', item)}
+        onPress= {()=> {onPress(item);}}
       >
         <View>
           <Text style={styles.title} numberOfLines={1}>

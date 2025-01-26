@@ -48,7 +48,10 @@ const localStorageService = {
     // Save deleted list
     saveDeleted: async (deleted: Article[]) => {
         try {
+            console.log('[!@#] saving delete:', deleted);
             await AsyncStorage.setItem(DELETED_KEY, JSON.stringify(deleted));
+            let saved = await AsyncStorage.getItem(DELETED_KEY);
+            console.log('[!@#] it was saved? :', saved);
         } catch (error) {
             console.error('[!@#] Save Deleted Error:', error);
         }

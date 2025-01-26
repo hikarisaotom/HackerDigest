@@ -39,13 +39,13 @@ function ArticlesScreen() {
     const {addToFavorites} = useFavoritesNews();
 
     const onFavorite = (item: Article) => {
-        addToFavorites(item,()=>{console.log('[!@#] added to favorites');},()=>{console.log('[!@#] NOT added')});
         notificationService.showInfoToast('🥳 God news!', 'The article has been added to your favorites 🎉');
+        addToFavorites(item,()=>{console.log('[!@#] added to favorites');},()=>{console.log('[!@#] NOT added')});
     };
 
     const onDelete = (item: Article) => {
-        addToDeleted(item,()=>{console.log('[!@#] added to deleted');},()=>{console.log('[!@#] NOT deleted')});
         notificationService.showDangerToast('🗑️ So sad to let it go... ', 'The article has been deleted and will not be shown again 👋');
+        addToDeleted(item,()=>{console.log('[!@#] added to deleted');},()=>{console.log('[!@#] NOT deleted')})        
     };
 
     //effects
@@ -75,6 +75,7 @@ function ArticlesScreen() {
                     secondAction={{ name: 'Favorite', action: onFavorite }}
                     onRefresh={onRefresh}
                     refreshing={refreshing}
+                    onPress={onPressCell}
                   />
                 )
             )}

@@ -1,6 +1,7 @@
 import apiService from '../../../data/services/apiService';
 import localStorageService from '../../../data/services/localStorageService';
 import { Article } from '../../interfaces/article';
+import saveNewsUseCase from './saveNewsUseCase';
 
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
@@ -24,7 +25,7 @@ const getNewsUseCase = async () => {
         date: item.created_at ? formatDate(item.created_at) : Unknown,
       }));
       // save the new articles to local storage for offline use
-      await localStorageService.saveArticles(articles);
+      saveNewsUseCase(articles);
       return articles;
     } else {
        // if hits is null, probably because of an error, try to get the saved data

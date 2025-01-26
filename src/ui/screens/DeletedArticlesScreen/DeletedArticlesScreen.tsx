@@ -1,4 +1,4 @@
-import React, { useContext} from 'react';
+import React, { useContext, useEffect} from 'react';
 import SwipeableList from '../../components/molecules/SwipeableList/SwipeableList';
 import useDeletedNews from '../../hooks/useDeletedNews';
 import { AppContext } from '../../../data/store/Context';
@@ -10,7 +10,6 @@ import ArticlesScreenStyles from '../ArticlesScreen/ArticlesScreen.style';
 
 
 const DeletedArticlesScreen = () => {
-    const { } = useDeletedNews();
     const { state } = useContext(AppContext);
     const { deleteNews } = state;
     const onRestore = (item: Article) => {

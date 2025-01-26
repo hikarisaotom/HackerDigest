@@ -5,14 +5,17 @@ import { Article } from '../../domain/interfaces/article';
 const useFavoritesNews = () => {
     const {dispatch } = useContext(AppContext);
 
-    const fetchFavorites = useCallback(async () => {
+    const fetchFavorites = async () => {
         try {
             const result = await getFavoritesUseCase();
+            console.log('[DEBUG] Fetched favorites:', result);
             dispatch({ type: 'setFavorites', payload: result });
+            return result;
         } catch (err) {
             dispatch({ type: 'setError', payload: 'Something went wrong' });
+            return [];
         }
-    }, [dispatch]);
+    };
 
     const addToFavorites = useCallback(async (newFavorite: Article, onSuccess: () => void, onError: () => void) => {
         try {
