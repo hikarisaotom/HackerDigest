@@ -1,6 +1,5 @@
-import PushNotificationIOS from '@react-native-community/push-notification-ios';
-import PushNotification from 'react-native-push-notification';
 import { PermissionsAndroid, Platform } from 'react-native';
+import notifee from '@notifee/react-native';
 
 export const requestNotificationPermission = async () => {
   if (Platform.OS === 'android') {
@@ -16,40 +15,39 @@ export const requestNotificationPermission = async () => {
     }
     createChannel();
   } else {
-    PushNotification.requestPermissions();
+    await notifee.requestPermission();
   }
 };
 
-  const createChannel = () => {
+  const createChannel = async () => {
     try {
       PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
       );
     } catch (error) {}
-    PushNotification.createChannel(
+    await notifee.createChannel(
       {
-        channelId: 'test-channel',
-        channelName: 'test Channel',
+        id: 'test-channel',
+        name: 'test Channel',
       },
       () => {},
     );
   };
 
 
-export const showNotification = (title: string, message: string) => {
+export const showNotification =  (title: string, message: string) => {
   console.log('[!@#] Sending notification:', title, message);
-    if (Platform.OS === 'ios') {
-      PushNotificationIOS.addNotificationRequest({
-        title: '🎉' + title + ' 🎉',
-        id: '1',
-        body: message,
-      });
-    } else {
-      PushNotification.localNotification({
+    notifee.displayNotification({
+      title: 'Notification Title',
+      body: 'Main body content of the notification',
+      android: {
         channelId: 'test-channel',
-        title: title,
-        message: message,
-      });
-    }
+        smallIcon: 'name-of-a-small-icon', // optional, defaults to 'ic_launcher'.
+        // pressAction is needed if you want the notification to open the app when pressed
+        pressAction: {
+          id: 'default',
+        },
+      },
+    }).then(() => console.log('[!@#]Notification displayed.')).catch((err) => console.log('[!@#]Error displaying notification:', err));
 };
 
