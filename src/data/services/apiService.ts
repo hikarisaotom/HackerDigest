@@ -7,11 +7,9 @@ import localStorageService from './localStorageService';
 const apiService = {
   getData: async (onSuccess: () => void, onFailure: () => void): Promise<BaseResponse | null> => {
     try {
-      console.log('[!@#] Config.API_URL',Config.API_URL);
       const response = await axios.get(Config.API_URL ?? '');
       // Save response to AsyncStorage
       await localStorageService.saveData(response.data);
-      console.log('[!@#] saved in cache');
       if (onSuccess) {
         onSuccess();
       }

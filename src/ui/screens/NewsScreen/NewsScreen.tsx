@@ -11,6 +11,7 @@ import WebViewModal from '../../components/molecules/WebViewModal/WebViewModal';
 import { AppContext } from '../../../data/store/Context';
 import useDeletedNews from '../../hooks/useDeletedNews';
 import useFavoritesNews from '../../hooks/useFavoritesNews';
+import notificationService from '../../utils/Notifications';
 
 function NewsScreen() {
     const [refreshing, setRefreshing] = useState(false);
@@ -39,9 +40,14 @@ function NewsScreen() {
     const {addToDeleted} = useDeletedNews();
     const {addToFavorites} = useFavoritesNews();
 
+    const onFavorite = (item: Hit) => {
+        addToFavorites(item,()=>{console.log('[!@#] added to favorites');},()=>{console.log('[!@#] NOT added')});
+        notificationService.showInfoToast('🥳 God news!', 'The article has been added to your favorites 🎉');
+    };
+
     const onDelete = (item: Hit) => {
-        // addToDeleted(item,()=>{console.log('[!@#] added to deleted');},()=>{console.log('[!@#] NOT deleted')});
-        addToFavorites(item,()=>{console.log('[!@#] added to deleted');},()=>{console.log('[!@#] NOT deleted')});
+        addToDeleted(item,()=>{console.log('[!@#] added to deleted');},()=>{console.log('[!@#] NOT deleted')});
+        notificationService.showDangerToast('🗑️ So sad to let it go... ', 'The article has been deleted and will not be shown again 👋');
     };
 
     //effects

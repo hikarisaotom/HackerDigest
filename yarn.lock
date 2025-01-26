@@ -1478,6 +1478,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@notifee/react-native@^9.1.8":
+  version "9.1.8"
+  resolved "https://registry.yarnpkg.com/@notifee/react-native/-/react-native-9.1.8.tgz#3d55cb3fbcc21f9e35931e366afdf64b294da891"
+  integrity sha512-Az/dueoPerJsbbjRxu8a558wKY+gONUrfoy3Hs++5OqbeMsR0dYe6P+4oN6twrLFyzAhEA1tEoZRvQTFDRmvQg==
+
 "@react-native-async-storage/async-storage@^2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@react-native-async-storage/async-storage/-/async-storage-2.1.0.tgz#84ca82af320c16d3d8e617508ea523fe786b6781"
@@ -5816,11 +5821,6 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-native-background-fetch@^4.2.7:
-  version "4.2.7"
-  resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-4.2.7.tgz#2c13afa2454d0f01da2b798d0968acf4a6b34373"
-  integrity sha512-lR8MmQRjd7MV9KBSOsyxFRW7jeCjNOSvsT4PECwZv54iZZtxUkRjH8Kbr6SGiSPK1AmYM6TCdRBEt2I9FDZJEg==
-
 react-native-config@^1.5.3:
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-1.5.3.tgz#1286c0c117adb367a948b31005430146e88c9c2e"
@@ -5882,6 +5882,11 @@ react-native-swipe-list-view@^3.2.9:
   version "3.2.9"
   resolved "https://registry.yarnpkg.com/react-native-swipe-list-view/-/react-native-swipe-list-view-3.2.9.tgz#d725c7cdf481dd5df12a00dbfe0120013b5f2e59"
   integrity sha512-SjAEuHc/D6ovp+RjDUhfNmw6NYOntdT7+GFhfMGfP/BSLMuMWynpzJy9GKQeyB8sI78T6Lzip21TVbongOg1Mw==
+
+react-native-toast-message@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-toast-message/-/react-native-toast-message-2.2.1.tgz#f395321e9bc818ce63274c38a3d294ed997a4a27"
+  integrity sha512-iXFMnlxPcgKKs4bZOIl06W16m6KXMh/bAYpWLyVXlISSCdcL2+FX5WPpRP3TGQeM/u9q+j5ex48DDY+72en+Sw==
 
 react-native-webview@^13.13.1:
   version "13.13.1"

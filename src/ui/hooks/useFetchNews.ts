@@ -2,7 +2,7 @@ import { useContext, useCallback } from 'react';
 import getNewsUseCase from '../../domain/useCases/getNewsUseCase';
 import { AppContext } from '../../data/store/Context';
 
-const useFetchNews = (onSuccess: () => void, onError: () => void) => {
+const useFetchNews = (onSuccess: () => void = ()=>{}, onError: () => void = ()=>{}) => {
   const { dispatch } = useContext(AppContext);
 
   const fetchNews = useCallback(async () => {
