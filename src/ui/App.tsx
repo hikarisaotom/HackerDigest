@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -20,17 +20,28 @@ import 'react-native-gesture-handler';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { NewsScreen } from './screens';
 import { ContextProvider } from '../data/store/Context';
-import { requestNotificationPermission } from './utils/Notifications';
+import notificationService from './utils/Notifications';
+import WebViewModal from './components/molecules/WebViewModal/WebViewModal';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
-
+  const [modalVisible, setModalVisible] = useState(false);
+  const [currentUrl, setCurrentUrl] = useState<string | null>(null);
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
     flex: 1,
   };
-  useState(() => {
-    requestNotificationPermission();
+
+  useEffect(() => {
+    notificationService.requestNotificationPermission();
+
+  }, []);
+  const onNotificationPress = (url: string) => {
+    setCurrentUrl(url);
+    setModalVisible(true);
+  };
+  useEffect(() => {
+    return notificationService.observeNotificationsEvents(onNotificationPress);
   }, []);
 
   return (
@@ -43,6 +54,11 @@ function App(): React.JSX.Element {
         />
         <GestureHandlerRootView style={{ flex: 1 }}>
           <NewsScreen />
+          <WebViewModal
+            visible={modalVisible}
+            url={currentUrl}
+            onClose={() => setModalVisible(false)}
+          />
         </GestureHandlerRootView>
       </SafeAreaView>
     </AppState>

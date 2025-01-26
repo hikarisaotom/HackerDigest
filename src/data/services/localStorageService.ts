@@ -1,6 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BaseResponse, Hit } from '../../domain/interfaces/news';
-import { NotificationPreferences } from '../store/types/types';
 
 const API_CACHE_KEY = 'last_api_response';
 const FAVORITES_KEY = 'favorites_list';
