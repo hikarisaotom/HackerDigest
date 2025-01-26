@@ -24,6 +24,7 @@ import notificationService from './services/NotificationService';
 import WebViewModal from './components/molecules/WebViewModal/WebViewModal';
 import Toast from 'react-native-toast-message';
 import backgroundService from './services/BackgroundSyncService';
+import MainNavigator from './navigation/MainNavigator';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -57,7 +58,7 @@ function App(): React.JSX.Element {
           backgroundColor={backgroundStyle.backgroundColor}
         />
         <GestureHandlerRootView style={{ flex: 1 }}>
-          <NewsScreen />
+        <MainNavigator />
           <WebViewModal
             visible={modalVisible}
             url={currentUrl}

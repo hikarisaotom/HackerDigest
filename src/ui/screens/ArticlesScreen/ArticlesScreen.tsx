@@ -1,6 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { RefreshControl, View } from 'react-native';
-import newsScreenStyles from './NewsScreen.style';
 import useFetchNews from '../../hooks/useFetchNews';
 import { Hit } from '../../../domain/interfaces/news';
 import { SwipeListView } from 'react-native-swipe-list-view';
@@ -12,14 +11,15 @@ import { AppContext } from '../../../data/store/Context';
 import useDeletedNews from '../../hooks/useDeletedNews';
 import useFavoritesNews from '../../hooks/useFavoritesNews';
 import notificationService from '../../services/NotificationService';
+import ArticlesScreenStyles from './ArticlesScreen.style';
 
-function NewsScreen() {
+function ArticlesScreen() {
     const [refreshing, setRefreshing] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [currentUrl, setCurrentUrl] = useState<string | null>(null);
     const { state } = useContext(AppContext);
     const { loading, news } = state;
-    const style = newsScreenStyles;
+    const style = ArticlesScreenStyles;
 
     //utils
     const stopRefresh = () => {
@@ -95,4 +95,4 @@ function NewsScreen() {
     );
 }
 
-export default NewsScreen;
+export default ArticlesScreen;
