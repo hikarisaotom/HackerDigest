@@ -40,11 +40,14 @@ function NewsScreen() {
     const {addToDeleted} = useDeletedNews();
     const {addToFavorites} = useFavoritesNews();
 
+    const onFavorite = (item: Hit) => {
+        addToFavorites(item,()=>{console.log('[!@#] added to favorites');},()=>{console.log('[!@#] NOT added')});
+        notificationService.showInfoToast('🥳 God news!', 'The article has been added to your favorites 🎉');
+    };
+
     const onDelete = (item: Hit) => {
-        // addToDeleted(item,()=>{console.log('[!@#] added to deleted');},()=>{console.log('[!@#] NOT deleted')});
-        // addToFavorites(item,()=>{console.log('[!@#] added to deleted');},()=>{console.log('[!@#] NOT deleted')});
-        // notificationService.showNotification('Deleted', 'Article deleted', item.url ?? item.story_url ?? '');
-        notificationService.showInfoToast('Deleted', 'Article deleted');
+        addToDeleted(item,()=>{console.log('[!@#] added to deleted');},()=>{console.log('[!@#] NOT deleted')});
+        notificationService.showDangerToast('🗑️ So sad to let it go... ', 'The article has been deleted and will not be shown again 👋');
     };
 
     //effects
