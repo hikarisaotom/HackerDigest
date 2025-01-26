@@ -18,12 +18,10 @@ import {
 import 'react-native-reanimated';
 import 'react-native-gesture-handler';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { NewsScreen } from './screens';
 import { ContextProvider } from '../data/store/Context';
 import notificationService from './services/NotificationService';
 import WebViewModal from './components/molecules/WebViewModal/WebViewModal';
 import Toast from 'react-native-toast-message';
-import backgroundService from './services/BackgroundSyncService';
 import MainNavigator from './navigation/MainNavigator';
 
 function App(): React.JSX.Element {
@@ -51,7 +49,6 @@ function App(): React.JSX.Element {
 
   return (
     <AppState>
-
       <SafeAreaView style={backgroundStyle}>
         <StatusBar
           barStyle={isDarkMode ? 'light-content' : 'dark-content'}
