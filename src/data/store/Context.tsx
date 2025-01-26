@@ -13,7 +13,7 @@ const initialState: NewsState = {
   notificationPreferences: {
     sendNotifications: true,
     timeInterval: Config.DEFAULT_TIME_INTERVAL as number ?? 18000,
-    articleType: '',
+    articleType: 'mobile',
   },
 };
 

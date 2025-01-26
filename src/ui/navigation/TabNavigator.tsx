@@ -6,8 +6,9 @@ import useDeletedNews from '../hooks/useDeletedNews';
 import useFavoritesNews from '../hooks/useFavoritesNews';
 import getNotificationPreferencesUseCase from '../../domain/useCases/notifications/getNotificationPreferencesUseCase';
 import { AppContext } from '../../data/store/Context';
-import backgroundService from '../services/BackgroundSyncService';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import useIntervalThread from '../hooks/useIntervalThread';
+import useNotificationPreferences from '../hooks/useNotificationPreferences';
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
@@ -15,26 +16,23 @@ const TabNavigator = () => {
   const { fetchNews } = useFetchNews();
   const { fetchDeleted } = useDeletedNews();
   const { fetchFavorites } = useFavoritesNews();
+  const { getNotificationPreferences } = useNotificationPreferences();
+
+  const { stopThread, isRunning } = useIntervalThread({
+    message: state.notificationPreferences.articleType,
+    interval: state.notificationPreferences.timeInterval,
+    shouldRun: state.notificationPreferences.sendNotifications,
+  });
 
   useEffect(() => {
-    getNotificationPreferencesUseCase().then((preferences) => {
-      dispatch({ type: 'setNotificationPreferences', payload: preferences });
-    });
+    getNotificationPreferences();
     fetchFavorites();
     fetchNews().then(() => { fetchDeleted()});
-  }, []);
 
-  useEffect(() => {
-    if (state.notificationPreferences) {
-      let { sendNotifications, timeInterval, articleType } = state.notificationPreferences;
-      if (sendNotifications) {
-        backgroundService.stopBackgroundSync();
-        backgroundService.startBackgroundSync(articleType, timeInterval);
-      } else {
-        backgroundService.stopBackgroundSync();
-      }
-    }
-  }, [state.notificationPreferences]);
+    return () => {
+      stopThread();
+    };
+  }, []);
 
   return (
     <Tab.Navigator
