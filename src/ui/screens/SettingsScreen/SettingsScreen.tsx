@@ -5,6 +5,7 @@ import notificationService from '../../services/NotificationService';
 import { AppContext } from '../../../data/store/Context';
 import useNotificationPreferences from '../../hooks/useNotificationPreferences';
 import { NotificationPreferences } from '../../../domain/interfaces/notifications';
+import i18n from 'i18next';
 
 const SettingsScreen: React.FC = () => {
     const { state} = useContext(AppContext);
@@ -26,7 +27,7 @@ const SettingsScreen: React.FC = () => {
     return (
         <PaperProvider>
             <View style={styles.container}>
-                <Text style={styles.header}>Settings</Text>
+                <Text style={styles.header}>{i18n.t('settings.title')}</Text>
 
                 <TextInput
                     style={styles.input}

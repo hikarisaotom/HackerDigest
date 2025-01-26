@@ -88,6 +88,11 @@ export function newsReducer(state: NewsState, action: newsAction) {
                 notificationPreferences: action.payload,
             };
             }
+        case 'setLanguage':
+            return {
+                ...state,
+                language: action.payload,
+            };
         default:
             return state;
     }

@@ -1,0 +1,7 @@
+{
+  "greeting": "Hello",
+  "description": "Welcome to our application!",
+  "settings": {
+    "title": "Configuraciones"
+  }
+}
