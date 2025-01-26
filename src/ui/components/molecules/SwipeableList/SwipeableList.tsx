@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, StatusBar } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { RefreshControl } from 'react-native-gesture-handler';
@@ -6,15 +6,14 @@ import { Article } from '../../../../domain/interfaces/article';
 import VisibleItem from '../../atoms/VisibleItem';
 import HiddenItem from '../../atoms/HiddenItem';
 
-interface Actions {
-  name: string;
+export interface Actions {
+  name?: string;
+  computedName?: (item: Article) => string;
   action: (item: Article) => void;
 }
 
 type SwipeableListProps = {
   data: Article[];
-  renderTitle: (item: Article) => string;
-  renderDetails?: (item: Article) => string;
   firstAction?: Actions;
   secondAction?: Actions;
   onRefresh?: () => void;
@@ -24,13 +23,16 @@ type SwipeableListProps = {
 
 const SwipeableList = ({
   data,
-  renderDetails,
   firstAction,
   secondAction,
   onRefresh = () => {},
   refreshing = false,
   onPress = () => {},
 }:SwipeableListProps) => {
+  const [keyRow, setKeyRow] = useState('0');
+  const renderDetails = (item: Article) => {
+    return item.author + ' - ' + item.date;
+  };
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" />
@@ -49,8 +51,9 @@ const SwipeableList = ({
         renderHiddenItem={(data, rowMap) => (
           <HiddenItem
             item={data.item.item}
+            keyRow ={keyRow}
             rowMap={rowMap}
-            key={data.item.key}
+            key={data.item.item.id+"-"+data.item.item.title}
             firstAction={firstAction}
             secondAction={secondAction}
           />
@@ -60,11 +63,10 @@ const SwipeableList = ({
         disableRightSwipe={true}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         onRowOpen={(rowKey, rowMap) => {
-          setTimeout(() => {
-              rowMap[rowKey].closeRow()
-              console.log('[!@#]Row opened ', rowKey)
-          }, 3000)
+          setKeyRow(rowKey);
       }}
+      closeOnRowPress={true}
+      closeOnRowBeginSwipe={true}
       />
     </View>
   );

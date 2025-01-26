@@ -17,23 +17,31 @@ const useFavoritesNews = () => {
         }
     };
 
-    const addToFavorites = useCallback(async (newFavorite: Article, onSuccess: () => void, onError: () => void) => {
+    const addToFavorites = useCallback(async (newFavorite: Article, onSuccess?: () => void, onError?: () => void) => {
         try {
             dispatch({ type: 'addToFavorites', payload: newFavorite });
-            onSuccess();
+            if(onSuccess){
+                onSuccess();
+            }
         } catch (err) {
-            onError();
+            if(onError){
+                onError();
+            }
             dispatch({ type: 'setError', payload: 'Something went wrong' });
         }
     }, [ dispatch]);
 
-    const removeFromFavorites = useCallback(async (newFavorite: Article, onSuccess: () => void, onError: () => void) => {
+    const removeFromFavorites = useCallback(async (newFavorite: Article, onSuccess?: () => void, onError?: () => void) => {
         try {
             dispatch({ type: 'removeFromFavorites', payload: newFavorite });
-            onSuccess();
+            if(onSuccess){
+                onSuccess();
+            }
         } catch (err) {
             dispatch({ type: 'setError', payload: 'Something went wrong' });
-            onError();
+            if(onError){
+                onError();
+            }
         }
     }, [dispatch]);
 

@@ -18,19 +18,28 @@ const useDeletedNews = () => {
     }
   };
 
-  const addToDeleted = async (deleted: Article, onSuccess: () => void, onError: () => void) => {
+  const addToDeleted = async (deleted: Article, onSuccess?: () => void, onError?: () => void) => {
     try {
       console.log('[!@#] ARTICLE TO DELETE', deleted.title);
       dispatch({ type: 'deleteArticle', payload: deleted });
-      onSuccess();
+      if (onSuccess) {onSuccess();}
     } catch (err) {
       dispatch({ type: 'setError', payload: 'Something went wrong' });
-      onError();
+      if (onError) {onError();}
     }
   };
 
+  const restoreArticleDeleted = async (deleted: Article, onSuccess?: () => void, onError?: () => void) => {
+    try {
+      dispatch({ type: 'restoreArticle', payload: deleted });
+      if (onSuccess) {onSuccess();}
+    } catch (err) {
+      dispatch({ type: 'setError', payload: 'Something went wrong' });
+      if (onError) {onError();}
+    }
+  };
 
-  return { fetchDeleted, addToDeleted };
+  return { fetchDeleted, addToDeleted , restoreArticleDeleted};
 };
 
 export default useDeletedNews;

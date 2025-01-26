@@ -12,8 +12,10 @@ import ArticlesScreenStyles from '../ArticlesScreen/ArticlesScreen.style';
 const DeletedArticlesScreen = () => {
     const { state } = useContext(AppContext);
     const { deleteNews } = state;
+    const { restoreArticleDeleted } = useDeletedNews();
     const onRestore = (item: Article) => {
         notificationService.showSucessToast('🎉 Welcome back!', 'The article has been restored 🎉');
+        restoreArticleDeleted(item);
     };
     const style = ArticlesScreenStyles;
     return (
@@ -21,8 +23,7 @@ const DeletedArticlesScreen = () => {
             {
                deleteNews.length > 0 ? <SwipeableList
                 data={deleteNews}
-                renderTitle={(item) => item.title}
-                renderDetails={(item) => item.author}
+                onPress={() => {}}
                 secondAction={{ name: 'undo', action: onRestore }}
             />
             : <EmptyScreen/>

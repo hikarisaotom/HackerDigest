@@ -7,6 +7,7 @@ export type newsAction =
     | { type: 'removeFromFavorites'; payload: Article }
     | { type: 'setFavorites'; payload: Article[] }
     | { type: 'deleteArticle'; payload: Article }
+    | {type: 'restoreArticle'; payload: Article}
     | { type: 'setDeletedArticles'; payload: Article[] }
     | { type: 'setLoading'; payload: boolean }
     | { type: 'setError'; payload: string }

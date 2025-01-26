@@ -59,6 +59,17 @@ export function newsReducer(state: NewsState, action: newsAction) {
                     deleteNews: newDeleted,
                 };
             }
+        case 'restoreArticle': {
+                let newDeleted = state.deleteNews.filter(article => article.id !== action.payload.id);
+                let newNews = [...state.news, action.payload];
+                saveDeletedUseCase(newDeleted);
+                saveNewsUseCase(newNews);
+                return {
+                    ...state,
+                    news: newNews,
+                    deleteNews: newDeleted,
+                };
+            }
         case 'setLoading':
             return {
                 ...state,

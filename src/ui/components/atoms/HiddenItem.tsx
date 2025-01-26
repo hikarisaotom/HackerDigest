@@ -3,42 +3,45 @@ import { Text, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 import { Article } from '../../../domain/interfaces/article';
 import { RowMap } from 'react-native-swipe-list-view';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Actions } from '../molecules/SwipeableList/SwipeableList';
 
 interface HiddenItemProps {
   item: Article;
+  keyRow: string;
   rowMap: RowMap<{
     key: string;
     item: Article;
 }>
   key: string;
-  firstAction?: { name: string; action: (item: Article) => void };
-  secondAction?: { name: string; action: (item: Article) => void };
+  firstAction?: Actions;
+  secondAction?: Actions;
 }
 
-const HiddenItem: React.FC<HiddenItemProps> = ({ item, rowMap, key, firstAction, secondAction }) => {
+const HiddenItem = ({ item, keyRow,  rowMap, key, firstAction, secondAction }:HiddenItemProps) => {
   return (
     <Animated.View style={[styles.rowBack]}>
       {firstAction && (
         <TouchableOpacity
           style={[styles.backRightBtn, styles.backRightBtnLeft]}
           onPress={() => {
+            console.log('[!@#] key for closing', keyRow);
+            rowMap[keyRow]?.closeRow();
             firstAction.action(item);
-            console.log('[!@#] key for closing', key);
-            rowMap[key]?.closeRow();
           }}
         >
-          <Text style={{ color: '#fff' }}> <Icon name= {firstAction.name} size={30} color="#fff" /></Text>
+          <Text style={{ color: '#fff' }}> <Icon name= {firstAction.name ?? ( firstAction.computedName ? firstAction.computedName(item) : 'home')} size={30} color="#fff" /></Text>
         </TouchableOpacity>
       )}
       {secondAction && (
         <TouchableOpacity
           style={[styles.backRightBtn, styles.backRightBtnRight]}
           onPress={() => {
+            console.log('[!@#] key for closing', keyRow);
+            rowMap[keyRow]?.closeRow();
             secondAction.action(item);
-            rowMap[key]?.closeRow();
           }}
         >
-          <Text style={{ color: '#fff' }}> <Icon name= {secondAction.name} size={30} color="#fff" /></Text>
+          <Text style={{ color: '#fff' }}> <Icon name= {secondAction.name ?? ( secondAction.computedName ? secondAction.computedName(item) : 'home')} size={30} color="#fff" /></Text>
         </TouchableOpacity>
       )}
     </Animated.View>
