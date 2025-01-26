@@ -3,22 +3,23 @@ import { View, TextInput, Button, Switch, Text, StyleSheet } from 'react-native'
 import { Provider as PaperProvider } from 'react-native-paper';
 import notificationService from '../../services/NotificationService';
 import { AppContext } from '../../../data/store/Context';
+import useNotificationPreferences from '../../hooks/useNotificationPreferences';
+import { NotificationPreferences } from '../../../domain/interfaces/notifications';
 
 const SettingsScreen: React.FC = () => {
-    const { state, dispatch} = useContext(AppContext);
-    const [value, setValue] = useState(state.notificationPreferences.articleType);
+    const { state} = useContext(AppContext);
+    const {saveNotificationPreferences} = useNotificationPreferences();
+    const [searchValue, setSearchValue] = useState(state.notificationPreferences.articleType);
     const [minutes, setMinutes] = useState<number | string>(state.notificationPreferences.timeInterval / 60 / 1000);
     const [notificationsEnabled, setNotificationsEnabled] = useState(state.notificationPreferences.sendNotifications);
 
     const handleSave = () => {
-        dispatch({
-            type: 'setNotificationPreferences',
-            payload: {
-                sendNotifications: notificationsEnabled,
+        const preferences:NotificationPreferences = {
+            articleType: searchValue,
             timeInterval: Number(minutes) * 60 * 1000,
-            articleType: value,
-            },
-        });
+            sendNotifications: notificationsEnabled,
+        };
+        saveNotificationPreferences(preferences);
         notificationService.showSucessToast('Settings saved', 'Settings saved successfully');
     };
 
@@ -27,15 +28,13 @@ const SettingsScreen: React.FC = () => {
             <View style={styles.container}>
                 <Text style={styles.header}>Settings</Text>
 
-                {/* Text input */}
                 <TextInput
                     style={styles.input}
                     placeholder="Enter value"
-                    value={value}
-                    onChangeText={setValue}
+                    value={searchValue}
+                    onChangeText={setSearchValue}
                 />
 
-                {/* Number input */}
                 <TextInput
                     style={styles.input}
                     placeholder="Enter minutes"
@@ -44,7 +43,7 @@ const SettingsScreen: React.FC = () => {
                     onChangeText={(text) => setMinutes(text)}
                 />
 
-                {/* Toggle for notifications */}
+
                 <View style={styles.toggleContainer}>
                     <Text>Enable Notifications</Text>
                     <Switch
@@ -53,9 +52,15 @@ const SettingsScreen: React.FC = () => {
                     />
                 </View>
 
-                {/* Save button */}
                 <Button title="Save" onPress={handleSave} />
-                <Button title="Test Notification" onPress={()=>{notificationService.showNotification('Test','Test Notification','https://github.com/hikarisaotom');}} />
+                <Button title="Test Notification" onPress={()=>{
+                    if(notificationsEnabled){
+                        notificationService.showNotification('Test','Test Notification','https://github.com/hikarisaotom')
+                    }else{
+                        notificationService.showDangerToast('Settings not saved', 'Please save settings before testing notification');
+                    }
+                }}
+                     />
             </View>
         </PaperProvider>
     );
