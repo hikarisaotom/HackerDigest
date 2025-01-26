@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 import { Article } from '../../../domain/interfaces/article';
 import { RowMap } from 'react-native-swipe-list-view';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 interface HiddenItemProps {
   item: Article;
@@ -26,7 +27,8 @@ const HiddenItem: React.FC<HiddenItemProps> = ({ item, rowMap, key, firstAction,
             rowMap[key]?.closeRow();
           }}
         >
-          <Text style={{ color: '#fff' }}>{firstAction.name}</Text>
+        
+          <Text style={{ color: '#fff' }}>{firstAction.name} <Icon name="trash" size={30} color="#fff" /></Text>
         </TouchableOpacity>
       )}
       {secondAction && (
