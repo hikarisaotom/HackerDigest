@@ -1,9 +1,5 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { RefreshControl, View } from 'react-native';
+import React, {useContext, useEffect, useState } from 'react';
 import useFetchNews from '../../hooks/useFetchNews';
-import { SwipeListView } from 'react-native-swipe-list-view';
-import RowItem from '../../components/molecules/RowItem/RowItem';
-import ActionButton from '../../components/atoms/ActionButton/ActionButton';
 import RowsSkeleton from '../../components/molecules/RowsSkeleton/RowsSkeleton';
 import WebViewModal from '../../components/molecules/WebViewModal/WebViewModal';
 import { AppContext } from '../../../data/store/Context';
@@ -12,6 +8,8 @@ import useFavoritesNews from '../../hooks/useFavoritesNews';
 import notificationService from '../../services/NotificationService';
 import ArticlesScreenStyles from './ArticlesScreen.style';
 import { Article } from '../../../domain/interfaces/article';
+import SwipeableList from '../../components/molecules/SwipeableList/SwipeableList';
+import { View } from 'react-native';
 
 function ArticlesScreen() {
     const [refreshing, setRefreshing] = useState(false);
@@ -55,10 +53,12 @@ function ArticlesScreen() {
         fetchNews();
     }, []);
 
-    const onRefresh = useCallback(() => {
+    const onRefresh = () => {
         setRefreshing(true);
-        fetchNews();
-    }, [fetchNews]);
+        fetchNews().then(() => {
+        setRefreshing(false);
+        });
+    };
 
     return (
         <View
@@ -67,28 +67,19 @@ function ArticlesScreen() {
                 <RowsSkeleton />
             ) : (
                 news && (
-                    <SwipeListView
-                        data={news}
-                        renderItem={(row) => (
-                            <RowItem
-                                key={row.item.id}
-                                title={row.item.title}
-                                autor={row.item.author}
-                                creationDate={row.item.date}
-                                onPressCell={() => onPressCell(row.item)}
-                            />
-                        )}
-                        renderHiddenItem={(row) => (
-                            <ActionButton onPressed={() =>  onDelete(row.item)} />
-                        )}
-                        leftOpenValue={0}
-                        rightOpenValue={-75}
-                        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-                    />
+                    <SwipeableList
+                    data={news}
+                    renderTitle={(item) => item.title}
+                    renderDetails={(item) => item.author}
+                    firstAction={{ name: 'Delete', action: onDelete }}
+                    secondAction={{ name: 'Favorite', action: onFavorite }}
+                    onRefresh={onRefresh}
+                    refreshing={refreshing}
+                  />
                 )
             )}
             {
-                modalVisible&& currentUrl && <WebViewModal
+                modalVisible && currentUrl && <WebViewModal
                 visible={modalVisible}
                 url={currentUrl}
                 onClose={() => setModalVisible(false)}
