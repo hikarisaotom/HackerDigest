@@ -71,12 +71,11 @@ function ArticlesScreen() {
                     data={news}
                     renderTitle={(item) => item.title}
                     renderDetails={(item) => item.author}
-                    firstAction={{ name: 'Delete', action: onDelete }}
-                    secondAction={{ name: 'Favorite', action: onFavorite }}
+                    firstAction={{ name: 'star-o', action: onFavorite }}
+                    secondAction={{ name: 'trash-o', action: onDelete }}
                     onRefresh={onRefresh}
                     refreshing={refreshing}
                     onPress={onPressCell}
-                    
                   />
                 )
             )}

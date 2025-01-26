@@ -23,7 +23,7 @@ const DeletedArticlesScreen = () => {
                 data={deleteNews}
                 renderTitle={(item) => item.title}
                 renderDetails={(item) => item.author}
-                firstAction={{ name: 'Restore', action: onRestore }}
+                secondAction={{ name: 'undo', action: onRestore }}
             />
             : <EmptyScreen/>
             }

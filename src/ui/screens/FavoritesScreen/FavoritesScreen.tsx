@@ -32,8 +32,8 @@ const FavoritesScreen = () => {
                 data={favoriteNews}
                 renderTitle={(item) => item.title}
                 renderDetails={(item) => item.author}
-                firstAction={{ name: 'Remove', action: onRemove }}
-                secondAction={{ name: 'Delete', action: onDelete  }}
+                firstAction={{ name: 'star', action: onRemove }}
+                secondAction={{ name: 'trash-o', action: onDelete  }}
             />
             : <EmptyScreen/>
             }
