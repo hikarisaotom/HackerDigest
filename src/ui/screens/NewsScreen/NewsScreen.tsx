@@ -43,7 +43,8 @@ function NewsScreen() {
     const onDelete = (item: Hit) => {
         // addToDeleted(item,()=>{console.log('[!@#] added to deleted');},()=>{console.log('[!@#] NOT deleted')});
         // addToFavorites(item,()=>{console.log('[!@#] added to deleted');},()=>{console.log('[!@#] NOT deleted')});
-        notificationService.showNotification('Deleted', 'Article deleted', item.url ?? item.story_url ?? '');
+        // notificationService.showNotification('Deleted', 'Article deleted', item.url ?? item.story_url ?? '');
+        notificationService.showInfoToast('Deleted', 'Article deleted');
     };
 
     //effects

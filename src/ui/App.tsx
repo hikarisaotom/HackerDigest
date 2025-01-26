@@ -22,6 +22,7 @@ import { NewsScreen } from './screens';
 import { ContextProvider } from '../data/store/Context';
 import notificationService from './utils/Notifications';
 import WebViewModal from './components/molecules/WebViewModal/WebViewModal';
+import Toast from 'react-native-toast-message';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -61,6 +62,7 @@ function App(): React.JSX.Element {
           />
         </GestureHandlerRootView>
       </SafeAreaView>
+      <Toast />
     </AppState>
   );
 }

@@ -26,6 +26,7 @@
     "react-native-skeleton-content-nonexpo": "^1.0.13",
     "react-native-skeleton-placeholder": "^5.2.4",
     "react-native-swipe-list-view": "^3.2.9",
+    "react-native-toast-message": "^2.2.1",
     "react-native-webview": "^13.13.1"
   },
   "devDependencies": {

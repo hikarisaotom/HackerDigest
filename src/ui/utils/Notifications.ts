@@ -1,5 +1,14 @@
 import notifee, { EventType } from '@notifee/react-native';
+import Toast, { ToastType } from 'react-native-toast-message';
 
+const showToast = (title: string, description: string, type: ToastType) => {
+  Toast.show({
+    type: type,
+    text1: title,
+    text2: description,
+    position: 'bottom',
+  });
+};
 const notificationService = {
   channelId: '',
 
@@ -37,7 +46,7 @@ const notificationService = {
       .then(() => console.log('[!@#] Notification displayed.'))
       .catch((err) => console.error('[!@#] Error displaying notification:', err));
   },
-  observeNotificationsEvents: (callback:(url:string)=>void) => {
+  observeNotificationsEvents: (callback: (url: string) => void) => {
     return notifee.onForegroundEvent(({ type, detail }) => {
       switch (type) {
         case EventType.DISMISSED:
@@ -45,12 +54,21 @@ const notificationService = {
           break;
         case EventType.PRESS:
           console.log('[!@#] User pressed notification', detail.notification);
-          if(detail?.notification?.data?.url){
+          if (detail?.notification?.data?.url) {
             callback(detail?.notification?.data?.url as string);
           }
           break;
       }
     });
+  },
+  showInfoToast: (title:string,description:string) => {
+    showToast('Info', 'showing info', 'info');
+  },
+  showDangerToast: (title:string,description:string) => {
+    showToast('Error', 'Something went wrong', 'error');
+  },
+  showSucessToast: (title:string,description:string) => {
+    showToast('Success', 'Operation completed', 'success');
   },
 };
 
