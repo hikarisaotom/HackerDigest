@@ -7,7 +7,9 @@ import localStorageService from './localStorageService';
 const apiService = {
   getData: async (onSuccess: () => void, onFailure: () => void): Promise<BaseResponse | null> => {
     try {
-      const response = await axios.get(Config.API_URL ?? '');
+      let url = Config.API_URL?.replace('$SEARCH_TERM$',Config.DEFAULT_SEARCH_TERM) ?? '';
+      console.log('[!@#] BASE URL:', url);
+      const response = await axios.get(url);
       // Save response to AsyncStorage
       await localStorageService.saveData(response.data);
       if (onSuccess) {
@@ -30,6 +32,17 @@ const apiService = {
         console.log('[!@#]error', error);
         throw error;
       }
+    }
+  },
+  getPreferenceData: async (query:string): Promise<BaseResponse | null> => {
+    try {
+      let searchTerm = query ? query :  Config.DEFAULT_SEARCH_TERM ?? 'mobile';
+      let url = Config.API_URL?.replace('$SEARCH_TERM$',searchTerm) ?? '';
+      console.log('[!@#] PREFERENCE URL:', url);
+      const response = await axios.get(url);
+      return response.data as BaseResponse ?? {};
+    } catch (error) {
+      return null;
     }
   },
 };

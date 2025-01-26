@@ -9,6 +9,8 @@ import getNotificationPreferencesUseCase from '../../domain/useCases/notificatio
 import useFetchNews from '../../ui/hooks/useFetchNews';
 import useDeletedNews from '../../ui/hooks/useDeletedNews';
 import useFavoritesNews from '../../ui/hooks/useFavoritesNews';
+import backgroundService from '../../ui/services/BackgroundSyncService';
+import Config from 'react-native-config';
 
 const initialState: NewsState = {
   news: [],
@@ -18,7 +20,7 @@ const initialState: NewsState = {
   error: '',
   notificationPreferences: {
     sendNotifications: true,
-    timeInterval: 1,
+    timeInterval: Config.DEFAULT_TIME_INTERVAL as number ?? 18000,
     articleType: '',
   },
 };
@@ -47,6 +49,7 @@ export const ContextProvider = ({ children }: any) => {
     getNotificationPreferencesUseCase().then((preferences) => {
       dispatch({ type: 'setNotificationPreferences', payload: preferences });
     });
+
     fetchFavorites().then(() => { console.log('[!@#] FAVORITES LOADED'); });
     fetchDeleted().then(() => { console.log('[!@#] DELETED LOADED'); });
     fetchNews().then(() => { console.log('[!@#] NEWS LOADED'); });
@@ -67,10 +70,16 @@ export const ContextProvider = ({ children }: any) => {
   }, [state.favoriteNews]);
 
   useEffect(() => {
-    if (state.notificationPreferences) {
-      saveNotificationPreferencesUseCase(state.notificationPreferences);
-      console.log('[!@#] Updated notification preferences:', state.notificationPreferences);
-    }
+    // if (state.notificationPreferences) {
+    //   saveNotificationPreferencesUseCase(state.notificationPreferences);
+    //   let {sendNotifications,timeInterval,articleType} = state.notificationPreferences;
+    //   if(sendNotifications){
+    //     backgroundService.startBackgroundSync(articleType,timeInterval);
+    //   }else{
+    //     backgroundService.stopBackgroundSync();
+    //   }
+    //   console.log('[!@#] Updated notification preferences:', state.notificationPreferences);
+    // }
   }, [state.notificationPreferences]);
 
   return (

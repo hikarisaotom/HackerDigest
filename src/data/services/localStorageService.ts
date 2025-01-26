@@ -1,5 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BaseResponse, Hit } from '../../domain/interfaces/news';
+import { NotificationPreferences } from '../../domain/interfaces/notifications';
+import Config from 'react-native-config';
 
 const API_CACHE_KEY = 'last_api_response';
 const FAVORITES_KEY = 'favorites_list';
@@ -77,7 +79,7 @@ const localStorageService = {
 
     // Read notification preferences
     readNotificationPreferences: async (): Promise<NotificationPreferences> => {
-        let defaultResponse:NotificationPreferences = {sendNotifications: true, timeInterval: 1, articleType: ''};
+        let defaultResponse:NotificationPreferences = {sendNotifications: true, timeInterval: Config.DEFAULT_TIME_INTERVAL ?? 180000, articleType: ''};
         try {
             const preferences = await AsyncStorage.getItem(NOTIFICATION_PREFERENCES);
             return preferences ? JSON.parse(preferences) : defaultResponse;
