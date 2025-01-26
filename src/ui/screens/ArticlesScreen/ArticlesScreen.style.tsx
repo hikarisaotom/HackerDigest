@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import customTheme from '../../styles/CustomTheme';
 
-const newsScreenStyles = StyleSheet.create({
+const ArticlesScreenStyles = StyleSheet.create({
     scrollView: {
       flexGrow: 1,
       justifyContent: 'flex-start',
@@ -14,4 +14,4 @@ const newsScreenStyles = StyleSheet.create({
     },
   });
 
-  export default newsScreenStyles;
+  export default ArticlesScreenStyles;

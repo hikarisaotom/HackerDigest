@@ -11,29 +11,42 @@ const backgroundSyncTask = async (taskDataArguments?: { query: string, delay: nu
     }
 
     const { query, delay } = taskDataArguments;
+    let taskCanceled = false; // Flag to handle cancellation
 
+    // Function to cancel the task
+    const cancelTask = () => {
+        taskCanceled = true;
+    };
+
+    // Start the syncing task
     await new Promise(async (resolve) => {
-        while (BackgroundService.isRunning()) {
+        while (BackgroundService.isRunning() && !taskCanceled) {
             console.log('[!@#] Syncing articles...');
             try {
+                // Fetch articles based on the query
                 const articles = await getPreferenceNews(query);
 
                 // If there are articles, show notifications
                 if (articles.length > 0) {
                     let article = articles[0];
-                    let title = article.title ?? article.story_title ?? article.comment_text ?? '';
-                    notificationService.showNotification(' 👀 we thought you might like this!', title, article.url ?? '');
+                    let title = article.title ;
+                    notificationService.showNotification(' 👀 we thought you might like this!', title, article.url);
                 }
-                await sleep(delay);
+                await sleep(delay); // Wait for the specified delay before the next iteration
             } catch (error) {
                 console.error('[!@#] Error during background sync:', error);
                 break; // Stop if an error occurs
             }
         }
+        resolve();
     });
+
+    return cancelTask; // Return the cancel task function so it can be called from outside
 };
 
 const backgroundService = {
+    cancelTask: null,  // Store cancel task reference
+
     startBackgroundSync: (query: string, delay: number) => {
         const options = {
             taskName: 'Sync Articles',
@@ -48,17 +61,29 @@ const backgroundService = {
                 delay: delay,
             },
         };
-        if(BackgroundService.isRunning()){
-            console.log('[!@#] sync already running, Stopping background sync');
+
+        if (BackgroundService.isRunning()) {
+            console.log('[!@#] Sync already running, stopping background sync');
             backgroundService.stopBackgroundSync();
         }
-        BackgroundService.start(backgroundSyncTask, options);
-        console.log('[!@#] sync started');
+
+        // Start background service
+        BackgroundService.start(backgroundSyncTask, options).then((cancelTask) => {
+            backgroundService.cancelTask = cancelTask;  // Store cancel task function
+        });
+        console.log('[!@#] Sync started');
     },
 
     stopBackgroundSync: () => {
-        BackgroundService.stop();
-        console.log('[!@#] sync stopped');
+        if (BackgroundService.isRunning()) {
+            console.log('[!@#] Stopping sync');
+            if (backgroundService.cancelTask) {
+                backgroundService.cancelTask();  // Call the cancel task function to stop the task
+                backgroundService.cancelTask = null;  // Reset the cancel task reference
+            }
+            BackgroundService.stop();  // Stop the background service
+            console.log('[!@#] Sync stopped');
+        }
     },
 };
 

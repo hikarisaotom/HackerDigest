@@ -8,10 +8,12 @@ const useFetchNews = (onSuccess: () => void = ()=>{}, onError: () => void = ()=>
   const fetchNews = useCallback(async () => {
     dispatch({ type: 'setLoading', payload: true });
     try {
-      const result = await getNewsUseCase(onSuccess, onError);
-      dispatch({ type: 'setArticles', payload: result.hits ?? []});
+      const articles = await getNewsUseCase();
+      dispatch({ type: 'setArticles', payload: articles ?? []});
+      onSuccess();
     } catch (err) {
       dispatch({ type: 'setError', payload: 'Something went wrong' });
+      onError();
     } finally {
       dispatch({ type: 'setLoading', payload: false });
     }

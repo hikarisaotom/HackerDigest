@@ -1,33 +1,44 @@
-import { useContext, useCallback, useEffect } from 'react';
+import { useContext, useCallback } from 'react';
 import { AppContext } from '../../data/store/Context';
-import { Hit } from '../../domain/interfaces/news';
 import getDeletedUseCase from '../../domain/useCases/deleteNews/getDeletedUseCase';
+import { Article } from '../../domain/interfaces/article';
 
 
 const useDeletedNews = () => {
   const {dispatch } = useContext(AppContext);
 
-  const fetchDeleted = useCallback(async () => {
+  const fetchDeleted = async () => {
     try {
       const result = await getDeletedUseCase();
       dispatch({ type: 'setDeletedArticles', payload: result });
+      return result;
     } catch (err) {
       dispatch({ type: 'setError', payload: 'Something went wrong' });
+      return [];
     }
-  }, [dispatch]);
+  };
 
-  const addToDeleted = useCallback(async (deleted: Hit, onSuccess: () => void, onError: () => void) => {
+  const addToDeleted = async (deleted: Article, onSuccess?: () => void, onError?: () => void) => {
     try {
-      console.log('[!@#] ARTICLE TO DELETE', deleted.title ?? deleted.story_title ?? deleted.comment_text);
       dispatch({ type: 'deleteArticle', payload: deleted });
+      if (onSuccess) {onSuccess();}
     } catch (err) {
       dispatch({ type: 'setError', payload: 'Something went wrong' });
-      onError();
+      if (onError) {onError();}
     }
-  }, [dispatch]);
+  };
 
+  const restoreArticleDeleted = async (deleted: Article, onSuccess?: () => void, onError?: () => void) => {
+    try {
+      dispatch({ type: 'restoreArticle', payload: deleted });
+      if (onSuccess) {onSuccess();}
+    } catch (err) {
+      dispatch({ type: 'setError', payload: 'Something went wrong' });
+      if (onError) {onError();}
+    }
+  };
 
-  return { fetchDeleted, addToDeleted };
+  return { fetchDeleted, addToDeleted , restoreArticleDeleted};
 };
 
 export default useDeletedNews;

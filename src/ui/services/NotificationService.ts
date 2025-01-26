@@ -1,7 +1,7 @@
 import notifee, { EventType } from '@notifee/react-native';
 import Toast, { ToastType } from 'react-native-toast-message';
 
-const showToast = (title: string, description: string, type: ToastType) => {
+const showToast = (type: ToastType, title: string, description: string) => {
   Toast.show({
     type: type,
     text1: title,
@@ -20,14 +20,10 @@ const notificationService = {
       id: 'default',
       name: 'Default Channel',
     });
-
-    console.log('[!@#] Channel created with ID:', channelId);
     notificationService.channelId = channelId;
   },
 
   showNotification: (title: string, message: string, url: String) => {
-    console.log('[!@#] Sending notification:', title, message);
-    console.log('[!@#] Channel ID ', notificationService.channelId);
     notifee
       .displayNotification({
         title: title || 'Notification Title',
@@ -43,17 +39,15 @@ const notificationService = {
           },
         },
       })
-      .then(() => console.log('[!@#] Notification displayed.'))
-      .catch((err) => console.error('[!@#] Error displaying notification:', err));
+      .then(() => console.log('[DEBUG] Notification displayed.'))
+      .catch((err) => console.error('[DEBUG] Error displaying notification:', err));
   },
   observeNotificationsEvents: (callback: (url: string) => void) => {
     return notifee.onForegroundEvent(({ type, detail }) => {
       switch (type) {
         case EventType.DISMISSED:
-          console.log('[!@#] User dismissed notification', detail.notification);
           break;
         case EventType.PRESS:
-          console.log('[!@#] User pressed notification', detail.notification);
           if (detail?.notification?.data?.url) {
             callback(detail?.notification?.data?.url as string);
           }
@@ -62,13 +56,13 @@ const notificationService = {
     });
   },
   showInfoToast: (title:string,description:string) => {
-    showToast('Info', 'showing info', 'info');
+    showToast('info', title, description);
   },
   showDangerToast: (title:string,description:string) => {
-    showToast('Error', 'Something went wrong', 'error');
+    showToast('error',  title, description);
   },
   showSucessToast: (title:string,description:string) => {
-    showToast('Success', 'Operation completed', 'success');
+    showToast('success',  title, description);
   },
 };
 

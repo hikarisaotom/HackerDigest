@@ -1,12 +1,12 @@
 import localStorageService from '../../../data/services/localStorageService';
 import { Article } from '../../interfaces/article';
 
-const saveDeletedUseCase = async (newData: Article[]) => {
+const saveNewsUseCase = async (newData: Article[]) => {
     try {
-      let data = await localStorageService.saveDeleted(newData);
+      let data = await localStorageService.saveArticles(newData);
       return data;
     } catch (error) {
       throw error;
     }
   };
-  export default saveDeletedUseCase;
+  export default saveNewsUseCase;

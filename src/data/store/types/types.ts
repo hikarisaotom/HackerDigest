@@ -1,7 +1,7 @@
 import { Dispatch } from 'react';
-import { Hit } from '../../../domain/interfaces/news';
 import { newsAction } from '../actions/newsActions';
 import { NotificationPreferences } from '../../../domain/interfaces/notifications';
+import { Article } from '../../../domain/interfaces/article';
 
 export type Contextprops = {
     state: NewsState;
@@ -11,9 +11,9 @@ export type Contextprops = {
   export type NewsState = {
     loading: boolean;
     error: string;
-    news: Hit[];
-    deleteNews: Hit[];
-    favoriteNews: Hit[];
+    news: Article[];
+    deleteNews: Article[];
+    favoriteNews: Article[];
     notificationPreferences:NotificationPreferences;
   };
 
