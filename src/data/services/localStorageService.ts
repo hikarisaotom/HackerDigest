@@ -14,7 +14,6 @@ const localStorageService = {
         try {
             await AsyncStorage.setItem(API_CACHE_KEY, JSON.stringify(data));
         } catch (error) {
-            console.error('[!@#] Save Data Error:', error);
         }
     },
 
@@ -24,7 +23,6 @@ const localStorageService = {
             const articles = await AsyncStorage.getItem(API_CACHE_KEY);
             return articles ? JSON.parse(articles) as Article[] : [];
         } catch (error) {
-            console.error('[!@#] Read Data Error:', error);
             return [];
         }
     },
@@ -40,7 +38,6 @@ const localStorageService = {
             const favorites = await AsyncStorage.getItem(FAVORITES_KEY);
             return favorites ? JSON.parse(favorites) as Article[] : [];
         } catch (error) {
-            console.error('[!@#] Read Favorites Error:', error);
             return [];
         }
     },
@@ -48,12 +45,8 @@ const localStorageService = {
     // Save deleted list
     saveDeleted: async (deleted: Article[]) => {
         try {
-            console.log('[!@#] saving delete:', deleted);
             await AsyncStorage.setItem(DELETED_KEY, JSON.stringify(deleted));
-            let saved = await AsyncStorage.getItem(DELETED_KEY);
-            console.log('[!@#] it was saved? :', saved);
         } catch (error) {
-            console.error('[!@#] Save Deleted Error:', error);
         }
     },
 
@@ -63,7 +56,6 @@ const localStorageService = {
             const deleted = await AsyncStorage.getItem(DELETED_KEY);
             return deleted ? JSON.parse(deleted) as Article[] : [];
         } catch (error) {
-            console.error('[!@#] Read Deleted Error:', error);
             return [];
         }
     },
@@ -73,18 +65,16 @@ const localStorageService = {
         try {
             await AsyncStorage.setItem(NOTIFICATION_PREFERENCES, JSON.stringify(preferences));
         } catch (error) {
-            console.error('[!@#] Save Notification Preferences Error:', error);
         }
     },
 
     // Read notification preferences
     readNotificationPreferences: async (): Promise<NotificationPreferences> => {
-        let defaultResponse: NotificationPreferences = { sendNotifications: true, timeInterval: Config.DEFAULT_TIME_INTERVAL ?? 180000, articleType: '' };
+        let defaultResponse: NotificationPreferences = { sendNotifications: true, timeInterval: Config.DEFAULT_TIME_INTERVAL ?? 180000, articleType: 'mobile' };
         try {
             const preferences = await AsyncStorage.getItem(NOTIFICATION_PREFERENCES);
             return preferences ? JSON.parse(preferences) : defaultResponse;
         } catch (error) {
-            console.error('[!@#] Read Notification Preferences Error:', error);
             return defaultResponse;
         }
     },

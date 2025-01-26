@@ -17,12 +17,11 @@ const TabNavigator = () => {
   const { fetchFavorites } = useFavoritesNews();
 
   useEffect(() => {
-    console.log('[!@#] INFORMATION LOADING');
     getNotificationPreferencesUseCase().then((preferences) => {
       dispatch({ type: 'setNotificationPreferences', payload: preferences });
     });
-    fetchFavorites().then(() => { console.log('[!@#] FAVORITES LOADED'); });
-    fetchNews().then(() => { fetchDeleted().then(() => { console.log('[!@#] DELETED LOADED'); }); });
+    fetchFavorites();
+    fetchNews().then(() => { fetchDeleted()});
   }, []);
 
   useEffect(() => {
@@ -34,7 +33,6 @@ const TabNavigator = () => {
       } else {
         backgroundService.stopBackgroundSync();
       }
-      console.log('[!@#] Updated notification preferences:', state.notificationPreferences);
     }
   }, [state.notificationPreferences]);
 

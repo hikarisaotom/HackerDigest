@@ -15,7 +15,6 @@ const apiService = {
   getData: async (): Promise<Hit[] | null> => {
     try {
       let url = Config.API_URL?.replace('$SEARCH_TERM$',Config.DEFAULT_SEARCH_TERM) ?? '';
-      console.log('[!@#] BASE URL:', url);
       const response = await fetchData(url);
       return response.hits ?? null;
     } catch (error) {

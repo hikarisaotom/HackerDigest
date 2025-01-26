@@ -20,7 +20,6 @@ const useDeletedNews = () => {
 
   const addToDeleted = async (deleted: Article, onSuccess?: () => void, onError?: () => void) => {
     try {
-      console.log('[!@#] ARTICLE TO DELETE', deleted.title);
       dispatch({ type: 'deleteArticle', payload: deleted });
       if (onSuccess) {onSuccess();}
     } catch (err) {

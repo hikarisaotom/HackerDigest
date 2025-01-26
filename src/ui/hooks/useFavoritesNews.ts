@@ -8,7 +8,6 @@ const useFavoritesNews = () => {
     const fetchFavorites = async () => {
         try {
             const result = await getFavoritesUseCase();
-            console.log('[DEBUG] Fetched favorites:', result);
             dispatch({ type: 'setFavorites', payload: result });
             return result;
         } catch (err) {

@@ -24,7 +24,6 @@ const HiddenItem = ({ item, keyRow,  rowMap, key, firstAction, secondAction }:Hi
         <TouchableOpacity
           style={[styles.backRightBtn, styles.backRightBtnLeft]}
           onPress={() => {
-            console.log('[!@#] key for closing', keyRow);
             rowMap[keyRow]?.closeRow();
             firstAction.action(item);
           }}
@@ -36,7 +35,6 @@ const HiddenItem = ({ item, keyRow,  rowMap, key, firstAction, secondAction }:Hi
         <TouchableOpacity
           style={[styles.backRightBtn, styles.backRightBtnRight]}
           onPress={() => {
-            console.log('[!@#] key for closing', keyRow);
             rowMap[keyRow]?.closeRow();
             secondAction.action(item);
           }}

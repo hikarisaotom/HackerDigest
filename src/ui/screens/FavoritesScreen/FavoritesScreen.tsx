@@ -17,7 +17,7 @@ const FavoritesScreen = () => {
     const { favoriteNews } = state;
     const onRemove = (item: Article) => {
         notificationService.showInfoToast('you cannot always be everyone s favorite', 'The article has been removed from your favorites');
-        removeFromFavorites(item,()=>{console.log('[!@#] removed from favorites');},()=>{console.log('[!@#] NOT removed')});
+        removeFromFavorites(item);
     };
     const style = ArticlesScreenStyles;
     return (

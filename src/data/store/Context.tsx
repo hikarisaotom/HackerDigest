@@ -19,8 +19,6 @@ const initialState: NewsState = {
 
 
 // Create context
-// export const AppContext = createContext({} as Contextprops);
-//!@#
 export const AppContext = createContext<{
   state: NewsState;
   dispatch: React.Dispatch<newsAction>;
