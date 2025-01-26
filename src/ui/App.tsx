@@ -20,9 +20,10 @@ import 'react-native-gesture-handler';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { NewsScreen } from './screens';
 import { ContextProvider } from '../data/store/Context';
-import notificationService from './utils/Notifications';
+import notificationService from './services/NotificationService';
 import WebViewModal from './components/molecules/WebViewModal/WebViewModal';
 import Toast from 'react-native-toast-message';
+import backgroundService from './services/BackgroundSyncService';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -42,7 +43,9 @@ function App(): React.JSX.Element {
     setModalVisible(true);
   };
   useEffect(() => {
-    return notificationService.observeNotificationsEvents(onNotificationPress);
+    return () => {
+      notificationService.observeNotificationsEvents(onNotificationPress);
+    };
   }, []);
 
   return (

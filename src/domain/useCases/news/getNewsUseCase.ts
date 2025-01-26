@@ -1,4 +1,4 @@
-import apiService from '../../data/services/apiService';
+import apiService from '../../../data/services/apiService';
 
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString);

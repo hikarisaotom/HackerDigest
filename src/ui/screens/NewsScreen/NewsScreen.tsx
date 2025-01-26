@@ -11,7 +11,7 @@ import WebViewModal from '../../components/molecules/WebViewModal/WebViewModal';
 import { AppContext } from '../../../data/store/Context';
 import useDeletedNews from '../../hooks/useDeletedNews';
 import useFavoritesNews from '../../hooks/useFavoritesNews';
-import notificationService from '../../utils/Notifications';
+import notificationService from '../../services/NotificationService';
 
 function NewsScreen() {
     const [refreshing, setRefreshing] = useState(false);

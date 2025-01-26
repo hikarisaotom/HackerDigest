@@ -1,5 +1,5 @@
 import { useContext, useCallback } from 'react';
-import getNewsUseCase from '../../domain/useCases/getNewsUseCase';
+import getNewsUseCase from '../../domain/useCases/news/getNewsUseCase';
 import { AppContext } from '../../data/store/Context';
 
 const useFetchNews = (onSuccess: () => void = ()=>{}, onError: () => void = ()=>{}) => {
