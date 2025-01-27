@@ -18,7 +18,7 @@ const ArticleRowStyle = StyleSheet.create({
     backgroundColor: customTheme.colors.background,
     borderRadius: customTheme.borderRadius.sm,
     height: 80,
-    paddingHorizontal: customTheme.spacing.m,
+    // paddingHorizontal: customTheme.spacing.m,
     paddingVertical: customTheme.spacing.s,
     marginBottom: customTheme.spacing.m,
     justifyContent: 'center',
@@ -28,9 +28,11 @@ const ArticleRowStyle = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-start',
+    width: '90%',
   },
   title: {
     fontSize: customTheme.fontSizes.m,
+    textAlign:'auto',
     fontWeight: 'bold',
     color: customTheme.colors.textPrimary,
     marginBottom: customTheme.spacing.xs,
@@ -39,6 +41,10 @@ const ArticleRowStyle = StyleSheet.create({
     fontSize: customTheme.fontSizes.s,
     color: customTheme.colors.textSecondary,
   },
+
+  row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' },
+  column: { flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', width: '80%' },
+  image: { width: 80, height: 80 },
 });
 
 export default ArticleRowStyle;

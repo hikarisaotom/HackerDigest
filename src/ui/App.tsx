@@ -5,11 +5,9 @@
  * @format
  */
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
-  SafeAreaView,
   StatusBar,
-  Text,
   useColorScheme,
 } from 'react-native';
 

@@ -7,7 +7,6 @@ import ArticleRow from '../../atoms/ArticleRow/ArticleRow';
 import ActionItem from '../../atoms/ActionItem/ActionItem';
 import i18n from 'i18next';
 import notificationService from '../../../services/NotificationService';
-import WebViewModal from '../WebViewModal/WebViewModal';
 import customTheme from '../../../styles/CustomTheme';
 import { AppContext } from '../../../../data/store/Context';
 
@@ -83,13 +82,6 @@ const SwipeableList = ({
         closeOnRowPress={true}
         closeOnRowBeginSwipe={true}
       />
-      {/* {url && (
-        <WebViewModal
-          visible={url !== null && url !== undefined && url !== ''}
-          url={url}
-          onClose={() => dispatch({ type: 'setUrl', payload: null })}
-        />
-      )} */}
     </View>
   );
 };
