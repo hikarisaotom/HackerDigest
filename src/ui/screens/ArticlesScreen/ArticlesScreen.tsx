@@ -11,10 +11,12 @@ import SwipeableList from '../../components/molecules/SwipeableList/SwipeableLis
 import { View } from 'react-native';
 import useFavoritesNews from '../../hooks/useFavoritesNews';
 import i18n from 'i18next';
+import ErrorScreen from '../ErrorScreen/ErrorScreen';
+import customTheme from '../../styles/CustomTheme';
 
 function ArticlesScreen() {
     const { state } = useContext(AppContext);
-    const { loading, news, favoriteNews } = state; 
+    const { loading, news, favoriteNews } = state;
     const [refreshing, setRefreshing] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [currentUrl, setCurrentUrl] = useState<string | null>(null);
@@ -33,14 +35,14 @@ function ArticlesScreen() {
         } else {
             let title = i18n.t('toasts.no_url_error_title');
             let message = i18n.t('toasts.no_url_error_message');
-            notificationService.showDangerToast(title,message );
+            notificationService.showDangerToast(title, message);
         }
     };
 
     // Hooks
     const { fetchNews } = useFetchNews(stopRefresh, stopRefresh);
     const { addToDeleted } = useDeletedNews();
-    const {addToFavorites, removeFromFavorites } = useFavoritesNews();
+    const { addToFavorites, removeFromFavorites } = useFavoritesNews();
     const toggleFavorite = (item: Article) => {
         const isFavorite = favoriteNews.some((fav: Article) => fav.id === item.id);
         if (isFavorite) {
@@ -74,18 +76,21 @@ function ArticlesScreen() {
                 <RowsSkeleton />
             ) : (
                 news && (
-                    <SwipeableList
-                        data={news}
-                        firstAction={{
-                            computedName: (item: Article) =>
-                                favoriteNews.some((fav: Article) => fav.id === item.id) ? 'star' : 'star-o',
-                            action: toggleFavorite,
-                        }}
-                        secondAction={{ name: 'trash-o', action: onDelete }}
-                        onRefresh={onRefresh}
-                        refreshing={refreshing}
-                        onPress={onPressCell}
-                    />
+                    news.length === 0 ? <ErrorScreen /> :
+                        <SwipeableList
+                            data={news}
+                            firstAction={{
+                                computedName: (item: Article) =>
+                                    favoriteNews.some((fav: Article) => fav.id === item.id) ?  'bookmark' : 'bookmark-o' ,
+                                action: toggleFavorite,
+                                color:(item: Article) =>
+                                    favoriteNews.some((fav: Article) => fav.id === item.id) ?  customTheme.colors.analogousDeepLavender : customTheme.colors.analogousLavender ,
+                            }}
+                            secondAction={{ name: 'trash-o', action: onDelete, color: ()=>{return customTheme.colors.complementary}}}
+                            onRefresh={onRefresh}
+                            refreshing={refreshing}
+                            onPress={onPressCell}
+                        />
                 )
             )}
             {modalVisible && currentUrl && (

@@ -3,13 +3,14 @@ import { View, StyleSheet, StatusBar } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { RefreshControl } from 'react-native-gesture-handler';
 import { Article } from '../../../../domain/interfaces/article';
-import VisibleItem from '../../atoms/VisibleItem';
-import HiddenItem from '../../atoms/HiddenItem';
+import ArticleRow from '../../atoms/ArticleRow/ArticleRow';
+import ActionItem from '../../atoms/ActionItem/ActionItem';
 
 export interface Actions {
   name?: string;
   computedName?: (item: Article) => string;
   action: (item: Article) => void;
+  color: (item?: Article) => string;
 }
 
 type SwipeableListProps = {
@@ -42,14 +43,14 @@ const SwipeableList = ({
           item,
         }))}
         renderItem={({ item }) => (
-          <VisibleItem
+          <ArticleRow
             item={item.item}
             onPress={onPress}
             renderDetails={renderDetails}
           />
         )}
         renderHiddenItem={(data, rowMap) => (
-          <HiddenItem
+          <ActionItem
             item={data.item.item}
             keyRow ={keyRow}
             rowMap={rowMap}
