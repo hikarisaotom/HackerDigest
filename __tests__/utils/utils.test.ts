@@ -1,5 +1,5 @@
-import { mapToArticle } from '../src/domain/utils';
-import mockHitData from './mockData/mockHitData';
+import { mapToArticle } from '../../src/domain/utils';
+import mockHitData from '../mockData/mockHitData';
 
 describe('Utility functions', () => {
   describe('mapToArticle', () => {

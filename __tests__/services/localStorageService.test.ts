@@ -2,9 +2,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Config from 'react-native-config';
-import { Article } from '../src/domain/interfaces/article';
-import { NotificationPreferences } from '../src/domain/interfaces/notifications';
-import localStorageService from '../src/data/services/localStorageService';
+import { Article } from '../../src/domain/interfaces/article';
+import { NotificationPreferences } from '../../src/domain/interfaces/notifications';
+import localStorageService from '../../src/data/services/localStorageService';
 
 // mock AsyncStorage and config
 jest.mock('@react-native-async-storage/async-storage', () => ({

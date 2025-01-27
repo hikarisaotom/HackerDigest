@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { BaseResponse, Hit } from '../src/data/types/news';
-import apiService from '../src/data/services/apiService';
+import { BaseResponse, Hit } from '../../src/data/types/news';
+import apiService from '../../src/data/services/apiService';
 
 // Mock axios and Config
 jest.mock('axios');

@@ -1,4 +1,4 @@
-import customTheme from '../src/ui/styles/CustomTheme';
+import customTheme from '../../src/ui/styles/CustomTheme';
 
 
 describe('customTheme', () => {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react-native';
-import ErrorScreen from '../src/ui/screens/ErrorScreen/ErrorScreen';
+import ErrorScreen from '../../src/ui/screens/ErrorScreen/ErrorScreen';
 
 test('renders ErrorScreen with the correct message and Lottie animation', async () => {
   render(<ErrorScreen />);
