@@ -10,6 +10,7 @@ import { Article } from '../../../domain/interfaces/article';
 import SwipeableList from '../../components/molecules/SwipeableList/SwipeableList';
 import { View } from 'react-native';
 import useFavoritesNews from '../../hooks/useFavoritesNews';
+import i18n from 'i18next';
 
 function ArticlesScreen() {
     const { state } = useContext(AppContext);
@@ -30,7 +31,9 @@ function ArticlesScreen() {
             setCurrentUrl(item.url);
             setModalVisible(true);
         } else {
-            notificationService.showDangerToast('🚨 Oh no!', 'We cannot open this article 😢');
+            let title = i18n.t('toasts.no_url_error_title');
+            let message = i18n.t('toasts.no_url_error_message');
+            notificationService.showDangerToast(title,message );
         }
     };
 
@@ -42,17 +45,14 @@ function ArticlesScreen() {
         const isFavorite = favoriteNews.some((fav: Article) => fav.id === item.id);
         if (isFavorite) {
             // Remove from favorites
-            notificationService.showDangerToast('🚫 Removed!', 'The article was removed from your favorites.');
             removeFromFavorites(item);
         } else {
             // Add to favorites
-            notificationService.showInfoToast('🥳 Good news!', 'The article has been added to your favorites 🎉');
             addToFavorites(item);
         }
     };
 
     const onDelete = (item: Article) => {
-        notificationService.showDangerToast('🗑️ So sad to let it go...', 'The article has been deleted and will not be shown again 👋');
         addToDeleted(item);
     };
 

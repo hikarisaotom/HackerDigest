@@ -26,8 +26,8 @@ const notificationService = {
   showNotification: (title: string, message: string, url: String) => {
     notifee
       .displayNotification({
-        title: title || 'Notification Title',
-        body: message || 'Main body content of the notification',
+        title: title,
+        body: message,
         data: {
           url: url,
         },

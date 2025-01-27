@@ -1,8 +1,7 @@
-import React, { useContext, useEffect} from 'react';
+import React, { useContext} from 'react';
 import SwipeableList from '../../components/molecules/SwipeableList/SwipeableList';
 import useDeletedNews from '../../hooks/useDeletedNews';
 import { AppContext } from '../../../data/store/Context';
-import notificationService from '../../services/NotificationService';
 import { Article } from '../../../domain/interfaces/article';
 import { View } from 'react-native';
 import EmptyScreen from '../EmptyScreen/EmptyScreen';
@@ -14,7 +13,6 @@ const DeletedArticlesScreen = () => {
     const { deleteNews } = state;
     const { restoreArticleDeleted } = useDeletedNews();
     const onRestore = (item: Article) => {
-        notificationService.showSucessToast('🎉 Welcome back!', 'The article has been restored 🎉');
         restoreArticleDeleted(item);
     };
     const style = ArticlesScreenStyles;
