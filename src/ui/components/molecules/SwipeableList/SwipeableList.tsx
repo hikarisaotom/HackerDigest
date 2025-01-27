@@ -37,8 +37,8 @@ const SwipeableList = ({
   const renderDetails = (item: Article) => {
     return item.author + ' - ' + item.date;
   };
-   const {dispatch, state } = useContext(AppContext);
-   let {url} = state;
+   const {dispatch } = useContext(AppContext);
+
   const onPressCell = (item: Article) => {
     if (item.url) {
       dispatch({ type: 'setUrl', payload: item.url });
@@ -83,13 +83,13 @@ const SwipeableList = ({
         closeOnRowPress={true}
         closeOnRowBeginSwipe={true}
       />
-      {url && (
+      {/* {url && (
         <WebViewModal
           visible={url !== null && url !== undefined && url !== ''}
           url={url}
           onClose={() => dispatch({ type: 'setUrl', payload: null })}
         />
-      )}
+      )} */}
     </View>
   );
 };

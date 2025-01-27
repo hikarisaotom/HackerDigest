@@ -10,6 +10,9 @@ import useIntervalThread from '../hooks/useIntervalThread';
 import useNotificationPreferences from '../hooks/useNotificationPreferences';
 import customTheme from '../styles/CustomTheme';
 import notificationService from '../services/NotificationService';
+import WebViewModal from '../components/molecules/WebViewModal/WebViewModal';
+import { Platform } from 'react-native';
+
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
@@ -35,56 +38,63 @@ const TabNavigator = () => {
     };
   }, []);
 
-    const onNotificationPress = (url: string) => {
-       dispatch({ type: 'setUrl', payload: url });
-    }
-    useEffect(() => {
-        const unsubscribe = notificationService.observeNotificationsEvents(onNotificationPress);
-        return () => {
-          unsubscribe();
-        } 
-    }, []);
+  const onNotificationPress = (url: string) => {
+    dispatch({ type: 'setUrl', payload: url });
+  };
+
+  useEffect(() => {
+    notificationService.observeNotificationsEvents(onNotificationPress);
+  }, []);
   return (
-    <Tab.Navigator
-    screenOptions={{
-      tabBarActiveTintColor: customTheme.colors.buttons,
-      tabBarInactiveTintColor: customTheme.colors.textSecondary,
-      tabBarStyle: {
-        backgroundColor: customTheme.colors.light,
-      },
-    }}
-  >
-    <Tab.Screen
-      name="Articles"
-      component={ArticlesScreen}
-      options={{
-        tabBarIcon: ({ color, size }) => (
-          <Icon name="list-alt" size={size} color={color} />
-        ),
-        headerShown: false,
-      }}
-    />
-    <Tab.Screen
-      name="Favorites"
-      component={FavoritesScreen}
-      options={{
-        tabBarIcon: ({ color, size }) => (
-          <Icon name="heart" size={size} color={color} />
-        ),
-        headerShown: false,
-      }}
-    />
-    <Tab.Screen
-      name="Deleted Articles"
-      component={DeletedArticlesScreen}
-      options={{
-        tabBarIcon: ({ color, size }) => (
-          <Icon name="trash-o" size={size} color={color} />
-        ),
-        headerShown: false,
-      }}
-    />
-  </Tab.Navigator>
+    <>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarActiveTintColor: customTheme.colors.buttons,
+          tabBarInactiveTintColor: customTheme.colors.textSecondary,
+          tabBarStyle: {
+            backgroundColor: customTheme.colors.light,
+          },
+        }}
+      >
+        <Tab.Screen
+          name="Articles"
+          component={ArticlesScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="list-alt" size={size} color={color} />
+            ),
+            headerShown: false,
+          }}
+        />
+        <Tab.Screen
+          name="Favorites"
+          component={FavoritesScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="heart" size={size} color={color} />
+            ),
+            headerShown: false,
+          }}
+        />
+        <Tab.Screen
+          name="Deleted Articles"
+          component={DeletedArticlesScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="trash-o" size={size} color={color} />
+            ),
+            headerShown: false,
+          }}
+        />
+      </Tab.Navigator>
+      {state.url && (
+        <WebViewModal
+          visible={Platform.OS === 'android' && state.url !== null && state.url !== undefined && state.url !== ''}
+          url={state.url}
+          onClose={() => dispatch({ type: 'setUrl', payload: null })}
+        />
+      )}
+    </>
   );
 };
 
