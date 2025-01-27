@@ -7,6 +7,19 @@ Author: Claudia Cortés
 
 > **Note**: While development, all libraries and similar were handled using yarn 
 
+## Before running the project 
+Configurations for the application are handled using enviroment variables. Because of good programming practices this file was not updated to the repository, so the user will have to create its one:
+
+create a ```.env``` in the ```root``` folder of the application ad paste this information:
+
+```sh
+API_URL= https://hn.algolia.com/api/v1/search_by_date?query=$SEARCH_TERM$
+ENVIRONMENT=development
+DEFAULT_SEARCH_TERM=mobile
+DEFAULT_SYNC_INTERVAL=180000
+```
+
+
 ## Step 1: To run  Metro
 ```sh
 yarn start
