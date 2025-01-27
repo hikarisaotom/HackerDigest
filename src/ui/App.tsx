@@ -47,12 +47,11 @@ function App(): React.JSX.Element {
 
   return (
     <AppState>
-      <SafeAreaView style={backgroundStyle}>
         <StatusBar
           barStyle={isDarkMode ? 'light-content' : 'dark-content'}
           backgroundColor={backgroundStyle.backgroundColor}
         />
-        <GestureHandlerRootView style={{ flex: 1 }}>
+        <GestureHandlerRootView >
         <MainNavigator />
           <WebViewModal
             visible={modalVisible}
@@ -60,7 +59,6 @@ function App(): React.JSX.Element {
             onClose={() => setModalVisible(false)}
           />
         </GestureHandlerRootView>
-      </SafeAreaView>
       <Toast />
     </AppState>
   );

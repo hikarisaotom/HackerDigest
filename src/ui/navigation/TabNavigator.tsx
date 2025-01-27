@@ -12,13 +12,13 @@ import customTheme from '../styles/CustomTheme';
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
-  const { state, dispatch } = useContext(AppContext);
+  const { state } = useContext(AppContext);
   const { fetchNews } = useFetchNews();
   const { fetchDeleted } = useDeletedNews();
   const { fetchFavorites } = useFavoritesNews();
   const { getNotificationPreferences } = useNotificationPreferences();
 
-  const { stopThread, isRunning } = useIntervalThread({
+  const { stopThread } = useIntervalThread({
     message: state.notificationPreferences.articleType,
     interval: state.notificationPreferences.timeInterval,
     shouldRun: state.notificationPreferences.sendNotifications,

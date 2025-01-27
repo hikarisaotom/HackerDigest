@@ -10,12 +10,14 @@ const DrawerNavigator = () => {
   return (
     <Drawer.Navigator>
       <Drawer.Screen name="Home" component={TabNavigator} options={{
+        // eslint-disable-next-line react/no-unstable-nested-components
         drawerIcon: ({ color, size }) => (
           <Icon name="home" color={color} size={size} />
         ),
       }} />
       <Drawer.Screen name="Settings" component={SettingsScreen}
         options={{
+          // eslint-disable-next-line react/no-unstable-nested-components
           drawerIcon: ({ color, size }) => (
             <Icon name="cog" color={color} size={size} />
           ),

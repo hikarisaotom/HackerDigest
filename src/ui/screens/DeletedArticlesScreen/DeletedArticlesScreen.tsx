@@ -22,7 +22,6 @@ const DeletedArticlesScreen = () => {
             {
                deleteNews.length > 0 ? <SwipeableList
                 data={deleteNews}
-                onPress={() => {}}
                 secondAction={{ name: 'undo', action: onRestore , color: ()=>{return customTheme.colors.accentGreen}}}
             />
             : <EmptyScreen/>

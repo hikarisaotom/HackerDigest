@@ -24,7 +24,6 @@ const FavoritesScreen = () => {
             {
                 favoriteNews.length > 0 ? <SwipeableList
                 data={favoriteNews}
-                onPress={() => {}}
                 secondAction={{ name: 'bookmark', action: onRemove, color: ()=>{return customTheme.colors.analogousDeepLavender;}  }}
             />
             : <EmptyScreen/>

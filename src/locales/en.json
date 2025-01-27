@@ -38,5 +38,13 @@
   "permissions": {
     "title": "Stay Updated with the Latest Articles!",
     "description": "Hey there! 🚀 We’d love to send you notifications about the latest articles that match your interests, so you can stay up-to-date on topics like Android, iOS, and more! \n\nBy allowing notifications, you’ll get updates on articles that matter most to you, based on the preferences you choose. You can always modify your preferences to get notified only about specific topics. 🙌 \n\nHere’s how it works:\n- Choose Your Interests: Select the types of articles you want notifications for (e.g., Android, iOS, etc.).\n- Get Instant Updates: When new articles match your preferences, we’ll send you a push notification.\n- Quick Access: Tap on a notification, and we’ll open the article directly in the app! \n\nYou’re in control – at any time, you can manage or disable notifications entirely in the app settings. 💬\n\nWould you like to enable push notifications now?"
+  },
+  "empty": {
+    "title": "Ups! Looks like there are no articles",
+    "message": "You haven't added any articles yet."
+  },
+  "error": {
+    "title": "Oops! Something went wrong",
+    "message": "We are unable to load the articles at the moment 😢. Please try again later."
   }
 }
