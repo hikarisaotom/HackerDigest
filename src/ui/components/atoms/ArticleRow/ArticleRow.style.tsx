@@ -18,7 +18,6 @@ const ArticleRowStyle = StyleSheet.create({
     backgroundColor: customTheme.colors.background,
     borderRadius: customTheme.borderRadius.sm,
     height: 80,
-    // paddingHorizontal: customTheme.spacing.m,
     paddingVertical: customTheme.spacing.s,
     marginBottom: customTheme.spacing.m,
     justifyContent: 'center',
