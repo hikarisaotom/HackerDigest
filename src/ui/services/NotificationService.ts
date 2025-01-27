@@ -1,6 +1,7 @@
 import notifee, { EventType } from '@notifee/react-native';
 import Toast, { ToastType } from 'react-native-toast-message';
-
+import { Alert } from 'react-native';
+import i18n from 'i18next';
 const showToast = (type: ToastType, title: string, description: string) => {
   Toast.show({
     type: type,
@@ -9,12 +10,41 @@ const showToast = (type: ToastType, title: string, description: string) => {
     position: 'bottom',
   });
 };
+const showNoPermissions =()=>{
+  notificationService.showDangerToast(
+    i18n.t('toasts.notifications_disabled_title'),
+    i18n.t('toasts.notifications_disabled_message')
+);
+}
+
 const notificationService = {
   channelId: '',
 
-  requestNotificationPermission: async () => {
-    await notifee.requestPermission();
 
+  requestNotificationPermission: async () => {
+    let status = (await notifee.getNotificationSettings()).authorizationStatus;
+    if(status !== 1){
+      Alert.alert(
+        i18n.t('permissions.title'),
+        i18n.t('permissions.description'),
+        [
+          {
+            text: 'No',
+            onPress: () => showNoPermissions(),
+            style: 'cancel',
+          },
+          {
+            text: 'Yes',
+            onPress: async () => {
+              const permission = await notifee.requestPermission();
+              if (!permission) {
+                showNoPermissions();
+              }
+            },
+          },
+        ]
+      );
+    }
     // Create the channel and store its ID
     const channelId = await notifee.createChannel({
       id: 'default',
