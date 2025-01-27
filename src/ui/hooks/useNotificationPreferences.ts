@@ -3,6 +3,8 @@ import { AppContext } from '../../data/store/Context';
 import getNotificationPreferencesUseCase from '../../domain/useCases/notifications/getNotificationPreferencesUseCase';
 import { NotificationPreferences } from '../../domain/interfaces/notifications';
 import saveNotificationPreferencesUseCase from '../../domain/useCases/notifications/saveNotificationPreferencesUseCase';
+import i18n from 'i18next';
+import notificationService from '../services/NotificationService';
 
 const useNotificationPreferences = () => {
     const {dispatch } = useContext(AppContext);
@@ -20,6 +22,9 @@ const useNotificationPreferences = () => {
 
     const saveNotificationPreferences = async (preferences: NotificationPreferences) => {
         try {
+            let title = i18n.t('toasts.settings_saved_title');
+            let message = i18n.t('toasts.settings_saved_message');
+            notificationService.showSucessToast(title, message);
             dispatch({ type: 'setNotificationPreferences', payload: preferences });
              await saveNotificationPreferencesUseCase(preferences);
         } catch (err) {

@@ -1,0 +1,35 @@
+{
+  "settings": {
+    "title": "Configuración",
+    "save": "Guardar",
+    "test_option": "Probar notificación",
+    "cancel": "Cancelar",
+    "article_type_title": "Tipo de artículo",
+    "article_type_placeholder": "Android, iOS, Web, Email, etc.",
+    "notification_interval_title": "Intervalo de notificación (minutos)",
+    "notification_interval_placeholder": "5",
+    "enable_notifications_title": "Habilitar notificaciones",
+    "enable_notifications_label": "Activar notificaciones"
+  },
+  "notifications": {
+    "test_notification_title": "¡Mírame!",
+    "test_notification_message": "¡Mira mis proyectos!",
+    "preference_notification": "👀 ¡Pensamos que esto podría interesarte!"
+  },
+  "toasts": {
+    "settings_saved_title": "🎉 ¡Éxito!",
+    "settings_saved_message": "Tus configuraciones se han guardado 🎉",
+    "no_url_error_title": "🚨 ¡Oh no!",
+    "no_url_error_message": "No podemos abrir este artículo 😢",
+    "add_favorite_title": "🥳 ¡Buenas noticias!",
+    "add_favorite_message": "El artículo ha sido añadido a tus favoritos 🎉",
+    "remove_favorite_title": "😓 No siempre puedes ser el favorito de todos",
+    "remove_favorite_message": "El artículo ha sido eliminado de tus favoritos 👋",
+    "delete_title": "🗑️ Qué triste dejarlo ir...",
+    "delete_message": "El artículo ha sido eliminado y no se mostrará de nuevo 👋",
+    "restore_title": "🎉 ¡Bienvenido de nuevo!",
+    "restore_message": "El artículo ha sido restaurado 🎉",
+    "notifications_disabled_title": "🔕 Notificaciones desactivadas",
+    "notifications_disabled_message": "Según tus configuraciones, no recibirás notificaciones"
+  }
+}

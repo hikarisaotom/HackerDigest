@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import getPreferenceNews from '../../domain/useCases/news/getPreferenceNews';
 import notificationService from '../services/NotificationService';
+import i18n from 'i18next';
 
 interface UseIntervalThreadProps {
   message: string;
@@ -27,7 +28,7 @@ const useIntervalThread = ({ message, interval, shouldRun }: UseIntervalThreadPr
             if (articles.length > 0) {
                 let article = articles[0];
                 let title = article.title ;
-                notificationService.showNotification(' 👀 we thought you might like this!', title, article.url);
+                notificationService.showNotification(i18n.t('notifications.preference_notification'), title, article.url);
             }
         });
       }, interval);
