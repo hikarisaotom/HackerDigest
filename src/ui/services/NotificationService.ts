@@ -65,7 +65,6 @@ const notificationService = {
           channelId: !notificationService.channelId ? 'default' : notificationService.channelId,
           pressAction: {
             id: 'default',
-            launchActivity: 'default',
           },
         },
       })

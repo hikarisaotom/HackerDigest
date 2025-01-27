@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Text, TouchableOpacity, View } from 'react-native';
+import { Modal, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { WebView } from 'react-native-webview';
 import WebViewModalStyles from './WebViewModal.style';
 import i18n from 'i18next';
@@ -19,6 +19,7 @@ const WebViewModal = ({ visible, url, onClose }:WebViewModalProps) => {
             animationType="slide"
             onRequestClose={onClose}
         >
+            <SafeAreaView>
             <View style={styles.modalContainer}>
                 <View style={styles.header}>
                     <TouchableOpacity onPress={onClose}>
@@ -31,6 +32,7 @@ const WebViewModal = ({ visible, url, onClose }:WebViewModalProps) => {
                     <Text style={styles.errorText}>{i18n.t('toasts.no_url_error_message')}</Text>
                 )}
             </View>
+            </SafeAreaView>
         </Modal>
     );
 };
