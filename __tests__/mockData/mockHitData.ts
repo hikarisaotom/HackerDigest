@@ -1,0 +1,40 @@
+const mockHitData = [
+    {
+      story_id: '123',
+      title: 'Mock Article Title 1',
+      content: 'This is the content of the mock article 1.',
+      author: 'John Doe',
+      url: 'http://example.com/mock-article-1',
+      created_at: '2025-01-25T00:00:00Z',
+      updated_at: '2025-01-26T00:00:00Z',
+      objectID: '123',
+      num_comments: 10,
+      points: 100,
+    },
+    {
+      story_id: '456',
+      title: 'Mock Article Title 2',
+      content: 'Content for the mock article 2.',
+      author: 'Jane Smith',
+      url: 'http://example.com/mock-article-2',
+      created_at: '2025-01-24T00:00:00Z',
+      updated_at: '2025-01-25T00:00:00Z',
+      objectID: '456',
+      num_comments: 5,
+      points: 50,
+    },
+    {
+      story_id: '789',
+      title: 'Mock Article Title 3',
+      content: 'This is the content of the mock article 3.',
+      author: 'Alex Johnson',
+      url: 'http://example.com/mock-article-3',
+      created_at: '2025-01-23T00:00:00Z',
+      updated_at: '2025-01-24T00:00:00Z',
+      objectID: '789',
+      num_comments: 3,
+      points: 30,
+    },
+  ];
+
+  export default mockHitData;
