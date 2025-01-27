@@ -1,6 +1,6 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-// import * as RNLocalize from 'react-native-localize';
+import * as RNLocalize from 'react-native-localize';
 import en from './en.json';
 import es from './es.json';
 

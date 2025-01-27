@@ -15,6 +15,8 @@ import {
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
+import 'react-native-reanimated';
+import 'react-native-gesture-handler';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ContextProvider } from '../data/store/Context';
 import notificationService from './services/NotificationService';
