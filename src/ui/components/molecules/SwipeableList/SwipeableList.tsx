@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, StyleSheet, StatusBar } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { RefreshControl } from 'react-native-gesture-handler';
@@ -9,6 +9,7 @@ import i18n from 'i18next';
 import notificationService from '../../../services/NotificationService';
 import WebViewModal from '../WebViewModal/WebViewModal';
 import customTheme from '../../../styles/CustomTheme';
+import { AppContext } from '../../../../data/store/Context';
 
 export interface Actions {
   name?: string;
@@ -36,12 +37,11 @@ const SwipeableList = ({
   const renderDetails = (item: Article) => {
     return item.author + ' - ' + item.date;
   };
-  const [modalVisible, setModalVisible] = useState(false);
-  const [currentUrl, setCurrentUrl] = useState<string | null>(null);
+   const {dispatch, state } = useContext(AppContext);
+   let {url} = state;
   const onPressCell = (item: Article) => {
     if (item.url) {
-      setCurrentUrl(item.url);
-      setModalVisible(true);
+      dispatch({ type: 'setUrl', payload: item.url });
     } else {
       let title = i18n.t('toasts.no_url_error_title');
       let message = i18n.t('toasts.no_url_error_message');
@@ -83,11 +83,11 @@ const SwipeableList = ({
         closeOnRowPress={true}
         closeOnRowBeginSwipe={true}
       />
-      {modalVisible && currentUrl && (
+      {url && (
         <WebViewModal
-          visible={modalVisible}
-          url={currentUrl}
-          onClose={() => setModalVisible(false)}
+          visible={url !== null && url !== undefined && url !== ''}
+          url={url}
+          onClose={() => dispatch({ type: 'setUrl', payload: null })}
         />
       )}
     </View>

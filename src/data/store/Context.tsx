@@ -17,6 +17,7 @@ const initialState: NewsState = {
     articleType: 'mobile',
   },
   language: 'en',
+  url:null,
 };
 
 

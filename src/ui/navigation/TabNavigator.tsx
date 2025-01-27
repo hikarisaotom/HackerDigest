@@ -9,10 +9,11 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import useIntervalThread from '../hooks/useIntervalThread';
 import useNotificationPreferences from '../hooks/useNotificationPreferences';
 import customTheme from '../styles/CustomTheme';
+import notificationService from '../services/NotificationService';
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
-  const { state } = useContext(AppContext);
+  const { state, dispatch } = useContext(AppContext);
   const { fetchNews } = useFetchNews();
   const { fetchDeleted } = useDeletedNews();
   const { fetchFavorites } = useFavoritesNews();
@@ -34,6 +35,15 @@ const TabNavigator = () => {
     };
   }, []);
 
+    const onNotificationPress = (url: string) => {
+       dispatch({ type: 'setUrl', payload: url });
+    }
+    useEffect(() => {
+        const unsubscribe = notificationService.observeNotificationsEvents(onNotificationPress);
+        return () => {
+          unsubscribe();
+        } 
+    }, []);
   return (
     <Tab.Navigator
     screenOptions={{

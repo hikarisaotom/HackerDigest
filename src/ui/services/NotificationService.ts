@@ -1,4 +1,4 @@
-import notifee, { EventType } from '@notifee/react-native';
+import notifee, { AndroidImportance, EventType } from '@notifee/react-native';
 import Toast, { ToastType } from 'react-native-toast-message';
 import { Alert } from 'react-native';
 import i18n from 'i18next';
@@ -10,11 +10,11 @@ const showToast = (type: ToastType, title: string, description: string) => {
     position: 'bottom',
   });
 };
-const showNoPermissions =()=>{
+const showNoPermissions = () => {
   notificationService.showDangerToast(
     i18n.t('toasts.notifications_disabled_title'),
     i18n.t('toasts.notifications_disabled_message')
-);
+  );
 }
 
 const notificationService = {
@@ -23,7 +23,7 @@ const notificationService = {
 
   requestNotificationPermission: async () => {
     let status = (await notifee.getNotificationSettings()).authorizationStatus;
-    if(status !== 1){
+    if (status !== 1) {
       Alert.alert(
         i18n.t('permissions.title'),
         i18n.t('permissions.description'),
@@ -36,7 +36,11 @@ const notificationService = {
           {
             text: 'Yes',
             onPress: async () => {
-              const permission = await notifee.requestPermission();
+              const permission = await notifee.requestPermission({
+                alert: true,
+                badge: true,
+                sound: true,
+              });
               if (!permission) {
                 showNoPermissions();
               }
@@ -46,11 +50,13 @@ const notificationService = {
       );
     }
     // Create the channel and store its ID
-    const channelId = await notifee.createChannel({
-      id: 'default',
+    notificationService.channelId = await notifee.createChannel({
+      id: 'hackerDigest',
       name: 'Default Channel',
+      importance: AndroidImportance.HIGH,
+      sound: 'default',
+      vibration: true,
     });
-    notificationService.channelId = channelId;
   },
 
   showNotification: (title: string, message: string, url: String) => {
@@ -59,13 +65,14 @@ const notificationService = {
         title: title,
         body: message,
         data: {
-          url: url,
+          url: url ?? 'google.com',
         },
         android: {
-          channelId: !notificationService.channelId ? 'default' : notificationService.channelId,
+          channelId: !notificationService.channelId ? 'hackerDigest' : notificationService.channelId,
           pressAction: {
             id: 'default',
           },
+          importance: AndroidImportance.HIGH,
         },
       })
       .then(() => console.log('[DEBUG] Notification displayed.'))
@@ -77,21 +84,25 @@ const notificationService = {
         case EventType.DISMISSED:
           break;
         case EventType.PRESS:
+          console.log('[DEBUG] Notification pressed:', detail?.notification?.data?.url);
           if (detail?.notification?.data?.url) {
             callback(detail?.notification?.data?.url as string);
+          }else{
+            console.log('[DEBUG] No URL found in notification data. Redirecting to google.com');
+            callback('https://google.com');
           }
           break;
       }
     });
   },
-  showInfoToast: (title:string,description:string) => {
+  showInfoToast: (title: string, description: string) => {
     showToast('info', title, description);
   },
-  showDangerToast: (title:string,description:string) => {
-    showToast('error',  title, description);
+  showDangerToast: (title: string, description: string) => {
+    showToast('error', title, description);
   },
-  showSucessToast: (title:string,description:string) => {
-    showToast('success',  title, description);
+  showSucessToast: (title: string, description: string) => {
+    showToast('success', title, description);
   },
 };
 

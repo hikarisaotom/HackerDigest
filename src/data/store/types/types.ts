@@ -15,6 +15,7 @@ export type Contextprops = {
     deleteNews: Article[];
     favoriteNews: Article[];
     notificationPreferences:NotificationPreferences;
-    language: string
+    language: string,
+    url: string | null
   };
 

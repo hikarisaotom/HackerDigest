@@ -93,6 +93,11 @@ export function newsReducer(state: NewsState, action: newsAction) {
                 ...state,
                 language: action.payload,
             };
+        case 'setUrl':
+            return {
+                ...state,
+                url: action.payload,
+            };
         default:
             return state;
     }
