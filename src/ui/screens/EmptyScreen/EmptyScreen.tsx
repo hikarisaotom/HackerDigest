@@ -4,7 +4,7 @@ import LottieSection from '../../components/molecules/LottieSection/LottieSectio
 
 const EmptyScreen = () => {
     return (
-        <LottieSection lottieSource={empty} message="Ups!, you haven't added anything yet" />
+            <LottieSection lottieSource={empty}  message="Ups!, you haven't added anything yet" />
     );
 };
 

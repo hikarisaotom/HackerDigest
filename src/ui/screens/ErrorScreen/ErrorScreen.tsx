@@ -4,7 +4,7 @@ import { search } from '../../assets';
 
 const ErrorScreen = () => {
     return (
-        <LottieSection lottieSource={search} message="Sorry, looks like we could not load the information " />
+        <LottieSection lottieSource={search} message="Sorry, looks like we could not load the information" />
     );
 };
 
