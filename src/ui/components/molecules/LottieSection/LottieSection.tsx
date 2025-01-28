@@ -12,8 +12,9 @@ interface LottieSectionProps {
 const LottieSection = ({ lottieSource, message, title}:LottieSectionProps) => {
   return (
     <View style={styles.container} testID="lottie-section">
+     <Text testID="lottie-title" style={styles.title}>{title}</Text>
       <LottieView source={lottieSource} autoPlay loop style={styles.lottie} />
-      <Text style={styles.text}>{message}</Text>
+      <Text testID="lottie-description" style={styles.text}>{message}</Text>
     </View>
   );
 };

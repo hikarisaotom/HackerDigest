@@ -37,7 +37,6 @@ export const ContextProvider = ({ children }: any) => {
 
   useEffect(() => {
     if (i18n.isInitialized && state.language) {
-      console.log('[!@#]Changing language to', state.language);
       i18n.changeLanguage(state.language);
     }
   }, [state.language]);

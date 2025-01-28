@@ -25,7 +25,6 @@ const apiService = {
     try {
       let search_term = searchTerm ? searchTerm :  Config.DEFAULT_SEARCH_TERM ?? 'mobile';
       let url = Config.API_URL?.replace('$SEARCH_TERM$',search_term) ?? '';
-      console.log('[!@#] Preference:', url);
       const response = await fetchData(url);
       return response.hits ?? null;
     } catch (error) {
