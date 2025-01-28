@@ -1,97 +1,117 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Article Reader Application 📲
 
-# Getting Started
+This project has been developed using React Native, incorporating clean architecture and atomic design principles to ensure maintainability and scalability. It integrates with the Algolia API to provide real-time information about mobile articles 📱. The app is structured into reusable components following atomic design, ensuring a modular and flexible approach to development while optimizing performance.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+Author: Claudia Cortés
 
-## Step 1: Start Metro
+---
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## How to Run the Project
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+> **Note:** During development, all dependencies and configurations were managed using Yarn.
+
+### **Before Running the Project**
+
+Environment variables are used to configure the application. For security reasons, the `.env` file is excluded from the repository. To set up the environment, create a `.env` file in the root folder and include the following variables:
 
 ```sh
-# Using npm
-npm start
+API_URL=https://hn.algolia.com/api/v1/search_by_date?query=$SEARCH_TERM$
+ENVIRONMENT=development
+DEFAULT_SEARCH_TERM=mobile
+DEFAULT_SYNC_INTERVAL=180000
+```
+Once the environment file is ready, proceed to the steps below
 
-# OR using Yarn
+## Step 1: Start  Metro
+```sh
 yarn start
 ```
 
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+## Step 2: Build the Application
 
 ### Android
 
 ```sh
-# Using npm
-npm run android
-
-# OR using Yarn
 yarn android
 ```
 
 ### iOS
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+For iOS, install CocoaPods dependencies first:
 
 ```sh
-bundle install
+cd ios && pod install 
+ #or 
+npx pod-install
 ```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+then run 
 
 ```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
 yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+## 3. Run Test:
+Use the following command to execute tests:
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+```sh
+yarn test
+```
+This will run all test suites, generate  a **`test code coverage report`**, and create UI snapshots.
 
-## Step 3: Modify your app
+> **Note**: Due to incomplete test coverage, exhaustive manual regression testing was performed.
 
-Now that you have successfully run the app, let's make changes!
+## Demo 🚀
+You can see a demo for [iOS](https://drive.google.com/drive/folders/15YRryfhsvUzEzZZp--rlP9EB_TRM8hb_?usp=sharing) and [Android](https://drive.google.com/drive/folders/11S1XmHfgAJl4K4vnS8eekAyWl3gpYFfc?usp=sharing). 
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+## Code Version Strategy :octocat: 📚
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+Git Flow was employed as a best programming practice for feature management, utilizing four entities: feature branches, the develop branch, bugfix branches, and the main branch.
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+- **Feature Branches:** Used for work in progress.
+- **Develop Branch:** Pull requests were made here once the code was stable, and all integrations were tested. Each pull request included detailed descriptions and documentation for the new changes.
+- **Bugfix Branches:** Created to address bugs. These fixes were also merged into the develop branch.
+- **Main Branch:** Contained stable and final versions of the code after successful testing and review.
 
-## Congratulations! :tada:
+> **Note** When creating the pull request, the branches were not intentionally deleted in order to keep them as illustrative examples of the work done. This allows reviewers and collaborators to clearly observe the structure and flow of tasks, as well as the specific changes made in each branch before merging them
 
-You've successfully run and modified your React Native App. :partying_face:
+## UX/UI📍  
+Drawing inspiration from common navigation models and incorporating data visualization techniques often found in popular news apps, we focused on creating a user-friendly and familiar experience.  
 
-### Now what?
+- **Navigation:** Tabs were initially displayed on the home screen but were later moved to a drawer to streamline navigation and avoid clutter.
+- **Input Validations and Alerts:** The interface was designed with clear input validations, friendly messages, and intuitive empty states to enhance user understanding.
+- **Feedback Mechanisms:** Alerts, toasts, and notifications were integrated to provide real-time feedback and keep users informed about important actions.
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+> **Note**:To accommodate a diverse audience, the app supports localization for both English and Spanish.
 
-# Troubleshooting
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+## Application Structure 🏗️
+The app is structured into several key components, each responsible for a distinct part of the application's functionality:
 
-# Learn More
+- **Navigation:** Utilizes a main stack navigator with a drawer to manage settings and tabs efficiently. Future features like authentication will be handled by separate navigators.
+- **Local Data Saving:** News articles are cached locally using  **local storage**, allowing offline access and reducing frequent network requests.
+- **Localization:** Supports multiple languages by storing text in organized directories. Currently supports English and Spanish.
+- **Notifications:** Alerts, toasts, and notifications keep users informed, providing a personalized and engaging experience.
+- **Background Sync:** Fetches and refreshes news articles in the background to ensure users receive up-to-date content even when the app is not actively in use.
 
-To learn more about React Native, take a look at the following resources:
+## Technologies Used 📱
+- **React Native**
+- **TypeScript**
+- **Algolia API** (for fetching articles)
+- **Push Notifications** (using `@notifee/react-native` )
+- **Jest** (for unit testing)
+- **React Navigation** (for screen navigation)
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+## OffLine Data Saving 📲  
+The app implements offline functionality by caching news article information locally on the user's device. This ensures access to articles even without an internet connection, improving both user experience and performance.
+
+## Known Issues
+- Push notifications might not function correctly on simulators. Use a physical device for full functionality.
+- Some libraries used in the project are not fully compatible with Jest, reducing automated test coverage.
+- Test coverage and number of tests limited due to incompatibilities and time limitations 
+
+## Future Enhancements
+- Implement advanced filtering for notifications based on article tags.
+- Add user authentication to save preferences and favorites across devices.
+- Backend suport to add profile picture for each user and display them in home screen along with the articles
+- Enhance UI/UX design for a smoother and more intuitive experience.
+- Enhance dependency imports into modules

@@ -6,6 +6,7 @@ import EmptyScreen from '../EmptyScreen/EmptyScreen';
 import { View } from 'react-native';
 import { Article } from '../../../domain/interfaces/article';
 import ArticlesScreenStyles from '../ArticlesScreen/ArticlesScreen.style';
+import customTheme from '../../styles/CustomTheme';
 
 
 
@@ -22,8 +23,7 @@ const FavoritesScreen = () => {
             {
                 favoriteNews.length > 0 ? <SwipeableList
                 data={favoriteNews}
-                onPress={() => {}}
-                secondAction={{ name: 'star', action: onRemove }}
+                secondAction={{ name: 'bookmark', action: onRemove, color: ()=>{return customTheme.colors.analogousDeepLavender;}  }}
             />
             : <EmptyScreen/>
             }

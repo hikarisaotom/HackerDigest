@@ -1,6 +1,6 @@
 {
   "settings": {
-    "title": "Configuración",
+    "title": "Configuraciones",
     "save": "Guardar",
     "test_option": "Probar notificación",
     "cancel": "Cancelar",
@@ -14,22 +14,29 @@
   "notifications": {
     "test_notification_title": "¡Mírame!",
     "test_notification_message": "¡Mira mis proyectos!",
-    "preference_notification": "👀 ¡Pensamos que esto podría interesarte!"
+    "preference_notification": "👀 ¡Pensamos que te podría gustar esto!"
   },
   "toasts": {
     "settings_saved_title": "🎉 ¡Éxito!",
-    "settings_saved_message": "Tus configuraciones se han guardado 🎉",
+    "settings_saved_message": "Tus configuraciones han sido guardadas 🎉",
     "no_url_error_title": "🚨 ¡Oh no!",
     "no_url_error_message": "No podemos abrir este artículo 😢",
+    // favorites 
     "add_favorite_title": "🥳 ¡Buenas noticias!",
-    "add_favorite_message": "El artículo ha sido añadido a tus favoritos 🎉",
+    "add_favorite_message": "El artículo ha sido agregado a tus favoritos 🎉",
     "remove_favorite_title": "😓 No siempre puedes ser el favorito de todos",
     "remove_favorite_message": "El artículo ha sido eliminado de tus favoritos 👋",
+    //delete and restore
     "delete_title": "🗑️ Qué triste dejarlo ir...",
-    "delete_message": "El artículo ha sido eliminado y no se mostrará de nuevo 👋",
+    "delete_message": "El artículo ha sido eliminado y no se mostrará nuevamente 👋",
     "restore_title": "🎉 ¡Bienvenido de nuevo!",
     "restore_message": "El artículo ha sido restaurado 🎉",
-    "notifications_disabled_title": "🔕 Notificaciones desactivadas",
+    // notifications disabled
+    "notifications_disabled_title": "🔕 Notificaciones deshabilitadas",
     "notifications_disabled_message": "Según tus configuraciones, no recibirás notificaciones"
+  },
+  "permissions": {
+    "title": "¡Mantente actualizado con los últimos artículos!",
+    "description": "¡Hola! 🚀 Nos encantaría enviarte notificaciones sobre los últimos artículos que coincidan con tus intereses, para que puedas mantenerte al día en temas como Android, iOS y más. \n\nAl permitir las notificaciones, recibirás actualizaciones sobre artículos que te interesan, según las preferencias que elijas. Siempre puedes modificar tus preferencias para recibir notificaciones solo sobre temas específicos. 🙌 \n\nAsí es como funciona:\n- Elige tus intereses: Selecciona los tipos de artículos para los que deseas recibir notificaciones (por ejemplo, Android, iOS, etc.).\n- Recibe actualizaciones instantáneas: Cuando haya nuevos artículos que coincidan con tus preferencias, te enviaremos una notificación push.\n- Acceso rápido: Toca una notificación y abriremos el artículo directamente en la app. \n\n¡Tú estás a cargo! – En cualquier momento, puedes gestionar o deshabilitar las notificaciones completamente en la configuración de la app. 💬\n\n¿Te gustaría habilitar las notificaciones push ahora?"
   }
 }

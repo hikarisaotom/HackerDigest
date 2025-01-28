@@ -16,12 +16,10 @@ const useIntervalThread = ({ message, interval, shouldRun }: UseIntervalThreadPr
   useEffect(() => {
     // stop the previous interval if it exists
     if (intervalRef.current) {
-        console.log('[!@#]Cleaning up previous interval');
       clearInterval(intervalRef.current);
     }
 
     if (shouldRun) {
-        console.log('[!@#]starting new interval with values: ', message, interval);
       intervalRef.current = setInterval(() => {
         //fetching information from the server
         getPreferenceNews(message).then((articles) => {
@@ -34,7 +32,6 @@ const useIntervalThread = ({ message, interval, shouldRun }: UseIntervalThreadPr
       }, interval);
       setIsRunning(true);
     } else {
-        console.log('[!@#] background fetching stopped working');
       setIsRunning(false);
     }
 
@@ -49,7 +46,6 @@ const useIntervalThread = ({ message, interval, shouldRun }: UseIntervalThreadPr
   // stop the interval
   const stopThread = () => {
     if (intervalRef.current) {
-        console.log('[!@#]Stopping interval');
       clearInterval(intervalRef.current);
       setIsRunning(false);
     }

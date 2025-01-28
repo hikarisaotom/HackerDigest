@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer } from 'react';
+import React,{ createContext, useEffect, useReducer } from 'react';
 import {  NewsState } from './types/types';
 import { newsReducer } from './reducers/newsReducer';
 import { newsAction } from './actions/newsActions';
@@ -17,6 +17,7 @@ const initialState: NewsState = {
     articleType: 'mobile',
   },
   language: 'en',
+  url:null,
 };
 
 
@@ -36,7 +37,6 @@ export const ContextProvider = ({ children }: any) => {
 
   useEffect(() => {
     if (i18n.isInitialized && state.language) {
-      console.log('[!@#]Changing language to', state.language);
       i18n.changeLanguage(state.language);
     }
   }, [state.language]);
