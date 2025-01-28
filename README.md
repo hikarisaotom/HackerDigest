@@ -1,31 +1,33 @@
-# Article reader application 📲
+# Article Reader Application 📲
+
 This project has been developed using React Native, incorporating clean architecture and atomic design principles to ensure maintainability and scalability. It integrates with the Algolia API to provide real-time information about mobile articles 📱. The app is structured into reusable components following atomic design, ensuring a modular and flexible approach to development while optimizing performance.
 
 Author: Claudia Cortés
 
-# How to run the project
+---
 
-> **Note**: While development, all libraries and similar were handled using yarn 
+## How to Run the Project
 
-## Before running the project 
-Configurations for the application are handled using enviroment variables. Because of good programming practices this file was not updated to the repository, so the user will have to create its one:
+> **Note:** During development, all dependencies and configurations were managed using Yarn.
 
-create a ```.env``` in the ```root``` folder of the application ad paste this information:
+### **Before Running the Project**
+
+Environment variables are used to configure the application. For security reasons, the `.env` file is excluded from the repository. To set up the environment, create a `.env` file in the root folder and include the following variables:
 
 ```sh
-API_URL= https://hn.algolia.com/api/v1/search_by_date?query=$SEARCH_TERM$
+API_URL=https://hn.algolia.com/api/v1/search_by_date?query=$SEARCH_TERM$
 ENVIRONMENT=development
 DEFAULT_SEARCH_TERM=mobile
 DEFAULT_SYNC_INTERVAL=180000
 ```
+Once the environment file is ready, proceed to the steps below
 
-
-## Step 1: To run  Metro
+## Step 1: Start  Metro
 ```sh
 yarn start
 ```
 
-## Step 2: Build apps
+## Step 2: Build the Application
 
 ### Android
 
@@ -35,53 +37,56 @@ yarn android
 
 ### iOS
 
-For iOS, remember to install CocoaPods dependencies .
+For iOS, install CocoaPods dependencies first:
 
 ```sh
 cd ios && pod install 
  #or 
 npx pod-install
 ```
-oncethe pods are installed run 
+then run 
+
 ```sh
 yarn ios
 ```
 
-## Run Test:
-Test run using yest, for running them use the command:
+## 3. Run Test:
+Use the following command to execute tests:
+
 ```sh
 yarn test
 ```
-this will run all test suites as well as generate a  **`test code coverage report`** as well as generating spanshots for ui screens tested
-> **Note**: Test were not fully finished, this has impacted the test coverage  percentage of the application,  however, exhaustive maual testing was performed by performing regression tests. 
+This will run all test suites, generate  a **`test code coverage report`**, and create UI snapshots.
+
+> **Note**: Due to incomplete test coverage, exhaustive manual regression testing was performed.
 
 ## Code Version Strategy :octocat: 📚
 
-Git Flow was employed as a best programming practice for feature management, utilizing four entities: **`feature branches`**, the **`develop branch`**, **`bugfix branches`**, and the **`main branch`**. 
-- Feature branches were used for work in progress.
-- Once the code was stable, a **`pull request`** was made to the **`develop branch`**, where the integration of new features was tested. Rach pul request had a detailed description and documentation related to the new changes incomming. 
-- When bug's were  finded, **`bugfix branches`** were created to solve and provide solutions to the errors. this were also merged into  the **`develop branch`**
-- Finally, if the code was stable, a **`pull request`** was made to the **`main branch`**. The main branch always contains stable and final versions of the code.
+Git Flow was employed as a best programming practice for feature management, utilizing four entities: feature branches, the develop branch, bugfix branches, and the main branch.
+
+- **Feature Branches:** Used for work in progress.
+- **Develop Branch:** Pull requests were made here once the code was stable, and all integrations were tested. Each pull request included detailed descriptions and documentation for the new changes.
+- **Bugfix Branches:** Created to address bugs. These fixes were also merged into the develop branch.
+- **Main Branch:** Contained stable and final versions of the code after successful testing and review.
 
 ## UX/UI📍  
-Drawing inspiration from common navigation models and incorporating data visualization techniques often found in popular news app, we focused on creating a user-friendly and familiar experience. To avoid overwhelming the main screen with too many tabs, a simple flow was implemented. The settings, including the home screen where tabs were initially displayed, were moved to a drawer, streamlining the main navigation.  
+Drawing inspiration from common navigation models and incorporating data visualization techniques often found in popular news apps, we focused on creating a user-friendly and familiar experience.  
 
-Additionally, the interface was designed with clear input validations, friendly messages, and intuitive empty states to enhance user understanding of the app's status. Alerts were strategically placed to notify users promptly about important actions, enriching the overall experience.  
+- **Navigation:** Tabs were initially displayed on the home screen but were later moved to a drawer to streamline navigation and avoid clutter.
+- **Input Validations and Alerts:** The interface was designed with clear input validations, friendly messages, and intuitive empty states to enhance user understanding.
+- **Feedback Mechanisms:** Alerts, toasts, and notifications were integrated to provide real-time feedback and keep users informed about important actions.
 
-To accommodate a diverse audience, the app supports internalization with both English and Spanish languages. Several feedback methods were integrated to keep users informed: alerts for important decisions, toasts for actions related to articles, and notifications tailored to user preferences, ensuring a smooth and engaging user experience.
+> **Note**:To accommodate a diverse audience, the app supports localization for both English and Spanish.
+
 
 ## Application Structure 🏗️
 The app is structured into several key components, each responsible for a distinct part of the application's functionality:
 
-- **Navigation**: The app provides support for multiple navigation flows. In this version, a main stack navigator is used, which includes a drawer to manage the settings and tabs efficiently. This setup allows for easy integration of future features, like authentication, which will be handled by a separate navigator.
-
-- **Local Data Saving**: News article information is cached locally using local storage. This ensures that once data is synchronized, it is available for offline use, providing users with access to news articles even without an internet connection and improving performance by reducing the need for frequent network requests.
-
-- **Localization**: The app supports multiple languages by implementing different directories for storing and managing text. This approach was designed with scalability in mind to support easy integration of additional languages in the future, currently supporting both English and Spanish.
-
-- **Notifications**: Various feedback mechanisms are integrated to notify users. Alerts are used for important actions, toasts notify users of article-related actions, and notifications are sent based on user preferences, ensuring a smooth and personalized experience.
-
-- **Background Information Fetching and Refreshing**: The app is designed to fetch and refresh news articles in the background, ensuring the content remains up-to-date and that users receive the latest information even when the app is not actively in use.
+- **Navigation:** Utilizes a main stack navigator with a drawer to manage settings and tabs efficiently. Future features like authentication will be handled by separate navigators.
+- **Local Data Saving:** News articles are cached locally using  **local storage**, allowing offline access and reducing frequent network requests.
+- **Localization:** Supports multiple languages by storing text in organized directories. Currently supports English and Spanish.
+- **Notifications:** Alerts, toasts, and notifications keep users informed, providing a personalized and engaging experience.
+- **Background Sync:** Fetches and refreshes news articles in the background to ensure users receive up-to-date content even when the app is not actively in use.
 
 ## Technologies Used 📱
 - **React Native**
@@ -95,14 +100,14 @@ The app is structured into several key components, each responsible for a distin
 ## Demo 🚀
 
 ## OffLine Data Saving 📲  
-The app implements an offline functionality model where news article information and their related data are cached locally on the user's device using local storage. This approach ensures that once the information is synchronized, it is stored locally for future use in case of no internet connection. This not only provides users with access to the news articles even when offline.
+The app implements offline functionality by caching news article information locally on the user's device. This ensures access to articles even without an internet connection, improving both user experience and performance.
 
 ## Known Issues
-- Push notifications might not work properly on simulators/emulators. Test on a real device for full functionality.
-- Low test coverage due to incompatibility with some libraries. 
+- Push notifications might not function correctly on simulators. Use a physical device for full functionality.
+- Some libraries used in the project are not fully compatible with Jest, reducing automated test coverage.
 
 ## Future Enhancements
-- Implement more advanced filtering for 
-- notifications based on article tags.
-- Add user authentication for saving preferences and favorites across devices.
-- Enhance UI/UX design for a smoother experience.
+- Implement advanced filtering for notifications based on article tags.
+- Add user authentication to save preferences and favorites across devices.
+- Enhance UI/UX design for a smoother and more intuitive experience.
+- Enhance dependency imports into modules
