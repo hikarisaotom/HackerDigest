@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import useDeletedNews from '../../hooks/useDeletedNews';
 import { AppContext } from '../../../data/store/Context';
 import useFavoritesNews from '../../hooks/useFavoritesNews';
 import SwipeableList from '../../components/molecules/SwipeableList/SwipeableList';

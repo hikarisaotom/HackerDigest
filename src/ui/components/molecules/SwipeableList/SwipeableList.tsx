@@ -48,7 +48,7 @@ const SwipeableList = ({
     }
   };
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="swipeable-list">
       <StatusBar barStyle="dark-content" />
       <SwipeListView
         data={data.map((item, index) => ({
