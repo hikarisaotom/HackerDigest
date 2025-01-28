@@ -98,7 +98,7 @@ The app is structured into several key components, each responsible for a distin
 
 
 ## Demo 🚀
-
+You can see a demo for [iOS](https://drive.google.com/drive/folders/15YRryfhsvUzEzZZp--rlP9EB_TRM8hb_?usp=sharing) and [Android](https://drive.google.com/drive/folders/11S1XmHfgAJl4K4vnS8eekAyWl3gpYFfc?usp=sharing). 
 ## OffLine Data Saving 📲  
 The app implements offline functionality by caching news article information locally on the user's device. This ensures access to articles even without an internet connection, improving both user experience and performance.
 
