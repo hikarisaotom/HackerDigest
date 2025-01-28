@@ -1,19 +1,33 @@
 const customTheme = {
     colors: {
-        primary: '#3498db', // Blue
-        secondary: '#2ecc71', // Green
-        danger: '#e74c3c', // Red
-        warning: '#f1c40f', // Yellow
-        info: '#8e44ad', // Purple
-        light: '#ecf0f1', // Light Grey
-        dark: '#2c3e50', // Dark Grey
+        primary: '#007bff', // Blue
+        secondary: '#28a745', // Green
+        danger: '#dc3545', // Red
+        warning: '#f59e0b', // Yellow
+        info: '#17a2b8', // Teal
+        light: '#f8f9fa', // Light background
+        dark: '#343a40', // Dark Gray
         background: '#ffffff', // White
-        textPrimary: '#2c3e50', // Dark text
-        textSecondary: '#7f8c8d', // Muted text
+        textPrimary: '#343a40', // Dark text
+        textSecondary: '#495057', // Gray text
+        border: '#ced4da', // Border color
+        divider: '#dee2e6', // Divider color
+        buttons: '#6750a4', // Purple
+        complementary: '#a46770',
+        analogousDeepLavender: '#5e3e7e',
+        analogousLavender: '#7f67b4',
+        contrastingWhite: '#ffffff',
+        contrastingLightGray: '#f8f9fa',
+        accentGreen: '#28a745',
+        accentGoldenYellow: '#f59e0b',
+        neutralCharcoalGray: '#343a40',
+        neutralLightGray: '#ced4da',
     },
     spacing: {
         xs: 4,
+        xsm:5,
         s: 8,
+        sm: 10,
         m: 16,
         l: 24,
         xl: 32,
@@ -33,7 +47,7 @@ const customTheme = {
         md: 8,
         lg: 16,
         xl: 24,
-        xxl:50,
+        xxl: 50,
     },
     breakpoints: {
         xs: 480,

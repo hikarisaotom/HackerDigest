@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import customTheme from '../../../styles/CustomTheme'; // Adjust the path if needed
 
-const { colors, spacing, fontSizes, borderRadius } = customTheme;
+const { colors, spacing, fontSizes } = customTheme;
 
 const WebViewModalStyles = StyleSheet.create({
   modalContainer: {

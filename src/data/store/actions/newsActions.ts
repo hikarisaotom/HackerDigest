@@ -12,4 +12,5 @@ export type newsAction =
     | { type: 'setLoading'; payload: boolean }
     | { type: 'setError'; payload: string }
     | { type: 'setNotificationPreferences'; payload: NotificationPreferences }
-    | { type: 'setLanguage'; payload: string };
+    | { type: 'setLanguage'; payload: string }
+    | { type: 'setUrl'; payload: string| null };

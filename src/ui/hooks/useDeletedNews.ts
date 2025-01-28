@@ -34,8 +34,8 @@ const useDeletedNews = () => {
 
   const restoreArticleDeleted = async (deleted: Article, onSuccess?: () => void, onError?: () => void) => {
     try {
-      let title = i18n.t('toasts.delete_title');
-      let mesagge = i18n.t('toasts.delete_message');
+      let title = i18n.t('toasts.restore_title');
+      let mesagge = i18n.t('toasts.restore_message');
       notificationService.showSucessToast(title, mesagge);
       dispatch({ type: 'restoreArticle', payload: deleted });
       if (onSuccess) {onSuccess();}

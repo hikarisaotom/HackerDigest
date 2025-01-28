@@ -6,11 +6,7 @@ const ArticlesScreenStyles = StyleSheet.create({
       flexGrow: 1,
       justifyContent: 'flex-start',
       padding: customTheme.spacing.l,
-    },
-    container: {
-      // backgroundColor: customTheme.colors.light,
-      backgroundColor: customTheme.colors.danger,
-      flex: 1,
+      backgroundColor: customTheme.colors.background,
     },
   });
 

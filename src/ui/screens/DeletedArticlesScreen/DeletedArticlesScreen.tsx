@@ -6,6 +6,7 @@ import { Article } from '../../../domain/interfaces/article';
 import { View } from 'react-native';
 import EmptyScreen from '../EmptyScreen/EmptyScreen';
 import ArticlesScreenStyles from '../ArticlesScreen/ArticlesScreen.style';
+import customTheme from '../../styles/CustomTheme';
 
 
 const DeletedArticlesScreen = () => {
@@ -21,8 +22,7 @@ const DeletedArticlesScreen = () => {
             {
                deleteNews.length > 0 ? <SwipeableList
                 data={deleteNews}
-                onPress={() => {}}
-                secondAction={{ name: 'undo', action: onRestore }}
+                secondAction={{ name: 'undo', action: onRestore , color: ()=>{return customTheme.colors.accentGreen}}}
             />
             : <EmptyScreen/>
             }
